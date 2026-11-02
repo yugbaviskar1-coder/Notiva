@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<link rel="icon" type="image/png" href="icon.png">
+<link rel="icon" type="image/png" href="notiva-emblem.png">
 
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Notiva: Smart notes. Better scores.</title>
@@ -265,7 +265,7 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);f
 </head>
 <body>
 <div class="wrap">
-<nav><a class="logo" href="#home" aria-label="Notiva home"><img src="assets/notiva-emblem.png" alt="Notiva logo"><span class="wm"><b>Noti<em>va</em></b><small>Smart notes. Better scores.</small></span></a><div class="links" id="links"></div></nav>
+<nav><a class="logo" href="#home" aria-label="Notiva home"><img src="notiva-emblem.png" alt="Notiva logo"><span class="wm"><b>Noti<em>va</em></b><small>Smart notes. Better scores.</small></span></a><div class="links" id="links"></div></nav>
 <main>
 <section class="page" id="p-home">
 <div class="hero2"><div>
@@ -375,6 +375,11 @@ footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);f
 <div class="mini" id="miniT"></div>
 <div class="timer" id="tm"><div class="tr"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="54"/><circle class="fg" id="tring" cx="60" cy="60" r="54"/></svg><b id="t">25:00</b></div><button class="btn" id="go">Start</button> <button class="btn alt" id="rs">Reset</button><p class="fm" id="fmsg"></p></div>
 <div class="tipg"><div class="tp" style="--d:0"><i>⏱️</i><p>Study in 25-minute blocks with a 5-minute break.</p></div><div class="tp" style="--d:1"><i>📝</i><p>Solve past question papers under a time limit.</p></div><div class="tp" style="--d:2"><i>✍️</i><p>Write down every formula you get wrong and revisit it.</p></div><div class="tp" style="--d:3"><i>😴</i><p>Review each day's notes before you sleep.</p></div></div></section>
+<section class="page" id="p-ask"><a class="back" href="#home">← Back to home</a>
+<div class="askhead"><img src="notiva-emblem.png" alt="Notiva logo"><div><h1 class="t">Ask Doubt</h1><p class="lead">Stuck on a Physics, Chemistry, Math or Bio question? Ask here. Class 11 and 12, Maharashtra Board and CBSE.</p></div></div>
+<div class="chatbox"><div id="nbMsgs" aria-live="polite"></div><div class="sugg" id="nbSug"></div>
+<form id="nbForm"><input id="nbIn" maxlength="500" placeholder="Type your doubt here" autocomplete="off" aria-label="Your doubt"><button class="btn" id="nbSend">Send</button></form></div>
+<p class="asknote">AI can make mistakes. Check important answers with your textbook.</p></section>
 </main>
 <footer><div class="fg"><div><b style="color:var(--text);font-size:18px">Notiva</b><p>Smart notes. Better scores. 🌟<br>Learn. Revise. Excel.<br>Made by Yug Baviskar</p></div>
 <div><h4>Pages</h4><a href="#home">Home</a><a href="#subjects">Subjects</a><a href="#planner">Study planner</a><a href="#practice">Practice</a><a href="#tips">Study tips</a><a href="#about">About us</a></div></div></footer>
@@ -388,7 +393,7 @@ var cfg={"physics":{t:"⚛️ Physics",a:"#6f86ff",l:"All Physics books, notes a
 "hsc-board":{t:"🎓 HSC Board",a:"#ff5c9a",l:"Notes and question papers for the HSC board exam.",sec:1,f:function(i){return i.s=="HSC Board"}},
 "mock-test":{t:"📝 Mock Test",a:"#38bdf8",l:"Mock tests to practise under exam time.",sec:1,f:function(i){return i.s=="Mock Test"}},
 "search":{t:"🔎 Search results",a:"#c8f542",l:"",f:function(i){var q=sq.toLowerCase();return (sub=="All Subjects"||i.s==sub)&&(rt=="All Resource Types"||has(i,rt)||i.t==rt)&&(i.n+" "+i.s+" "+i.t+" "+i.d).toLowerCase().indexOf(q)>-1}}};
-var nav=[["home","Home"],["subjects","Subjects"],["planner","📅 Planner"],["practice","🧠 Practice"],["tips","💡 Tips"],["about","About us"]];
+var nav=[["home","Home"],["subjects","Subjects"],["planner","📅 Planner"],["practice","🧠 Practice"],["ask","🤖 Ask Doubt"],["tips","💡 Tips"],["about","About us"]];
 // Add real files here. cats = subsections it appears in
 var items=[
 {s:"Physics",t:"Book",n:"HC Verma, Concepts of Physics Vol 1",d:"Textbook with solved examples and exercises.",u:"pdfs/hc-verma-vol-1.pdf",cats:["Class 11"]},
@@ -461,10 +466,10 @@ function fill(h){
  list.forEach(function(i){g.appendChild(card(i))});
 }
 function route(){
- var h=(location.hash||"#home").slice(1);if(!{home:1,subjects:1,tips:1,planner:1,practice:1,about:1}[h]&&!cfg[h])h="home";
- var pid=(h=="home"||h=="subjects")?"p-home":h=="tips"?"p-tips":h=="planner"?"p-planner":h=="practice"?"p-practice":h=="about"?"p-about":"p-list";
+ var h=(location.hash||"#home").slice(1);if(!{home:1,subjects:1,tips:1,planner:1,practice:1,ask:1,about:1}[h]&&!cfg[h])h="home";
+ var pid=(h=="home"||h=="subjects")?"p-home":h=="tips"?"p-tips":h=="planner"?"p-planner":h=="practice"?"p-practice":h=="ask"?"p-ask":h=="about"?"p-about":"p-list";
  document.querySelectorAll(".page").forEach(function(s){s.classList.toggle("on",s.id==pid)});
- document.documentElement.style.setProperty("--a",(h=="home"||h=="subjects")?"#c8f542":h=="tips"?"#6fe3a8":h=="planner"?"#ffb454":h=="practice"?"#38bdf8":h=="about"?"#a78bfa":cfg[h].a);
+ document.documentElement.style.setProperty("--a",(h=="home"||h=="subjects")?"#c8f542":h=="tips"?"#6fe3a8":h=="planner"?"#ffb454":h=="practice"?"#38bdf8":h=="ask"?"#38bdf8":h=="about"?"#a78bfa":cfg[h].a);
  links.querySelectorAll("a").forEach(function(a){if(a.dataset.id==h)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
  if(pid=="p-list"){if(h!="search"){sel="All";sel2="All"}fill(h)}
  if(h=="subjects"){var el=document.getElementById("subjects");if(el)el.scrollIntoView({behavior:"smooth"})}else window.scrollTo(0,0);
@@ -658,6 +663,53 @@ document.getElementById("lq").onsubmit=function(e){e.preventDefault();
  m.textContent="Added "+n+" question"+(n>1?"s":"")+" (+"+gain+" XP)."+(hit?" 🔥 5 questions done today. Your streak is counted! +20 XP":"")};
 drawPractice();
 renderStats();
+</script>
+<style>
+.askhead{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.askhead img{width:84px;height:84px;object-fit:contain;flex:none}
+.askhead>div{flex:1;min-width:220px}
+.chatbox{display:flex;flex-direction:column;background:var(--surface);border:1px solid #38bdf855;border-radius:18px;overflow:hidden;margin-top:16px;min-height:360px;height:min(62vh,560px);height:min(62dvh,560px)}
+#nbMsgs{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+.nbm{max-width:88%;padding:9px 12px;border-radius:14px;font-size:15px;line-height:1.5;white-space:pre-wrap;word-wrap:break-word}
+.nbm.bot{align-self:flex-start;background:#1a1e26;border:1px solid #2a303a}
+.nbm.me{align-self:flex-end;background:linear-gradient(90deg,#38bdf8,#8b5cf6);color:#0a0c10;font-weight:500}
+.nbm.wait{color:var(--muted);font-style:italic}
+.sugg{display:flex;gap:8px;flex-wrap:wrap;padding:0 14px 10px}
+.sugg[hidden]{display:none}
+#nbForm{display:flex;gap:8px;padding:10px;border-top:1px solid var(--line)}
+#nbIn{flex:1;min-width:0;background:var(--bg);border:1px solid var(--line);color:var(--text);border-radius:10px;padding:11px;font:inherit;font-size:16px}
+#nbSend{background:linear-gradient(90deg,#38bdf8,#8b5cf6);color:#0a0c10;border-radius:10px}
+#nbSend:disabled{opacity:.5;cursor:default}
+.asknote{font-size:12px;color:var(--muted);margin:10px 2px 0}
+#nbBtn{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:40;width:64px;height:64px;border-radius:50%;border:2px solid #38bdf8;background:#0a0c10;padding:8px;box-shadow:0 8px 26px #38bdf855,0 0 0 4px #8b5cf622;transition:transform .2s;display:block}
+#nbBtn[hidden]{display:none}
+#nbBtn:hover{transform:scale(1.07)}
+#nbBtn img{width:100%;height:100%;object-fit:contain;display:block}
+</style>
+<a id="nbBtn" href="#ask" aria-label="Ask Doubt"><img src="notiva-emblem.png" alt="Notiva logo"></a>
+<script>
+(function(){
+var WORKER_URL="PASTE_YOUR_WORKER_URL_HERE";
+var btn=document.getElementById("nbBtn"),msgs=document.getElementById("nbMsgs"),form=document.getElementById("nbForm"),inp=document.getElementById("nbIn"),snd=document.getElementById("nbSend"),sug=document.getElementById("nbSug");
+var hist=[],busy=false;
+function add(role,text,cls){var d=document.createElement("div");d.className="nbm "+role+(cls?" "+cls:"");d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}
+add("bot","Hi! I am Notiva Ask Doubt. Ask me any Physics, Chemistry, Math or Biology doubt from Class 11 or 12 (Maharashtra Board or CBSE).");
+["Explain Newton's three laws","What is the mole concept?","How do I integrate x^2 dx?","Difference between mitosis and meiosis"].forEach(function(q){var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=q;b.onclick=function(){ask(q)};sug.appendChild(b)});
+function ask(t){
+ t=(t||"").trim();if(!t||busy)return;
+ sug.hidden=true;add("me",t);inp.value="";hist.push({role:"user",content:t});
+ if(WORKER_URL.indexOf("http")!==0){add("bot","Ask Doubt is not connected yet. Please check back soon.");return}
+ busy=true;snd.disabled=true;var w=add("bot","Thinking...","wait");
+ fetch(WORKER_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({messages:hist.slice(-8)})})
+ .then(function(r){return r.json().catch(function(){return {}})})
+ .then(function(j){var a=(j&&j.reply)||"Sorry, something went wrong. Please try again.";w.textContent=a;w.classList.remove("wait");hist.push({role:"assistant",content:a})})
+ .catch(function(){w.textContent="Could not connect. Please check your internet and try again.";w.classList.remove("wait")})
+ .then(function(){busy=false;snd.disabled=false;msgs.scrollTop=msgs.scrollHeight});
+}
+form.onsubmit=function(e){e.preventDefault();ask(inp.value)};
+function sync(){btn.hidden=((location.hash||"#home")=="#ask")}
+window.addEventListener("hashchange",sync);sync();
+})();
 </script>
 </body>
 </html>
