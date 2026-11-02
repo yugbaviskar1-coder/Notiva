@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="icon" type="image/png" href="icon.png">
+
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Notiva: Smart notes. Better scores.</title>
+<meta name="description" content="Notiva has study books, handbooks, notes and question papers for Physics, Chemistry, Math and Bio, plus a free study planner.">
+<meta property="og:title" content="Notiva: Smart notes. Better scores.">
+<meta property="og:description" content="Study books, notes and question papers in one place.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Inter:wght@300;400;500&family=Instrument+Serif:ital@1&display=swap">
+<style>
+:root{--bg:#0a0c10;--surface:#14171d;--line:#252a33;--text:#f2f4f7;--muted:#9aa3b2;--ink:#0a0c10;--a:#c8f542;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font:400 16px/1.6 Inter,system-ui,sans-serif;min-height:100vh}
+h1,h2,h3{font-family:"Bricolage Grotesque",Inter,sans-serif;line-height:1.05;margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--a);outline-offset:3px}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 0}
+.logo{font:800 20px "Bricolage Grotesque",sans-serif;text-decoration:none;display:flex;align-items:center;gap:9px;white-space:nowrap}
+.logo b{border:2px solid var(--a);color:var(--a);border-radius:6px;font-size:12px;padding:2px 5px;letter-spacing:.02em}
+.links{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.links a{color:var(--muted);text-decoration:none;font-size:14px;padding:8px 12px;white-space:nowrap;border-bottom:2px solid transparent}
+.links a:hover{color:var(--text)}
+.links a[aria-current=page]{color:var(--text);border-bottom-color:var(--a)}
+.page{display:none;padding:34px 0 20px}.page.on{display:block}
+.eyebrow{color:var(--a);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin:0 0 10px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;padding-bottom:30px}
+.hero h1{font-size:clamp(42px,9vw,80px);font-weight:800;letter-spacing:-.025em}
+.lead{color:var(--muted);font-size:17px;max-width:32em;margin:18px 0 24px}
+.search{display:flex;gap:8px;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px}
+.search input,.search select{background:transparent;border:0;color:var(--text);font:inherit;padding:10px;min-width:0}
+.search input{flex:1 1 180px}
+.search select{background:var(--bg);border-radius:8px;border:1px solid var(--line)}
+.btn{display:inline-block;background:var(--a);color:var(--ink);font:500 15px Inter,sans-serif;padding:11px 20px;border-radius:9px;text-decoration:none;border:0;cursor:pointer}
+.btn.alt{background:transparent;color:var(--text);border:1px solid var(--line)}
+.pop{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;font-size:13px;color:var(--muted);align-items:center}
+.pop button{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:999px;padding:4px 12px;font:inherit;cursor:pointer}
+.pop button:hover{color:var(--text);border-color:var(--a)}
+.art{position:relative;height:340px}
+.art i{position:absolute;display:block;border-radius:50%}
+.art .c1{width:250px;height:250px;background:var(--a);right:10px;top:10px}
+.art .c2{width:110px;height:110px;background:#3b3bf0;left:30px;top:120px;display:grid;place-items:center}
+.art .c3{width:200px;height:200px;border:1px dashed #556;right:60px;bottom:0}
+.art .tag{position:absolute;right:0;top:30px;color:var(--a);font:700 15px "Bricolage Grotesque";line-height:1.3;text-align:left}
+section.blk{padding:44px 0}
+section.blk h2{font-size:clamp(28px,5vw,38px);font-weight:700;margin-bottom:20px}
+.subs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.sub{display:flex;flex-direction:column;justify-content:space-between;min-height:290px;border-radius:14px;padding:18px;text-decoration:none;color:#fff;background:var(--c);overflow:hidden}
+.sub h3{font-size:22px;display:flex;justify-content:space-between}
+.sub p{margin:6px 0 0;font-size:13px;opacity:.85}
+.sub svg{width:100%;height:120px;margin:10px 0}
+.sub span{font-size:14px}
+.feat{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.feat div{border-left:1px solid var(--line);padding:4px 18px}
+.feat svg{width:34px;height:34px;stroke:var(--f);fill:none;stroke-width:1.6;margin-bottom:12px}
+.feat h3{font-size:17px;margin-bottom:6px}.feat p{margin:0;color:var(--muted);font-size:14px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));background:var(--surface);border-radius:14px;padding:22px}
+.stats div{padding:0 18px}.stats b{display:block;font:700 34px "Bricolage Grotesque",sans-serif}.stats span{color:var(--muted);font-size:14px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:18px}
+.steps i{display:grid;place-items:center;width:40px;height:40px;border-radius:50%;background:var(--c);font:700 17px Inter;font-style:normal;margin-bottom:12px}
+.steps h3{font-size:18px;margin-bottom:4px}.steps p{margin:0;color:var(--muted);font-size:14px}
+.cta{background:var(--a);color:var(--ink);border-radius:16px;padding:34px 28px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.cta h2{font-size:clamp(28px,5vw,40px);margin:0;max-width:11em}.cta p{margin:8px 0 0;max-width:26em}
+.cta .btn{background:var(--ink);color:#fff}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 18px}
+.chip{background:var(--surface);border:1px solid var(--line);color:var(--muted);padding:8px 14px;border-radius:999px;font:inherit;font-size:14px;cursor:pointer}
+.chip[aria-pressed=true]{background:var(--a);color:var(--ink);border-color:var(--a)}
+.page h1.t{font-size:clamp(38px,8vw,64px);font-weight:800;letter-spacing:-.02em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.card{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px}
+.card:hover{border-color:var(--a)}
+.card h3{font-size:18px;margin:4px 0 6px}.card p{margin:0 0 12px;color:var(--muted);font-size:14px}.card span{font-size:13px;color:var(--a)}
+.empty{border:1px dashed var(--line);border-radius:14px;padding:18px;color:var(--muted)}
+.timer{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px;margin:24px 0;max-width:340px}
+.timer b{display:block;font:700 56px "Bricolage Grotesque",sans-serif;color:var(--a);margin-bottom:12px}
+ul.tips{padding-left:20px;max-width:36em;color:var(--muted)}ul.tips li{margin-bottom:8px}
+footer{border-top:1px solid var(--line);padding:30px 0 40px;color:var(--muted);font-size:14px;margin-top:30px}
+.fg{display:grid;grid-template-columns:2fr 1fr 1fr;gap:20px}.fg h4{margin:0 0 10px;color:var(--text);font-size:15px}.fg a{display:block;text-decoration:none;margin-bottom:6px}.fg a:hover{color:var(--a)}
+#vw{position:fixed;inset:0;z-index:50;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}#vw[hidden]{display:none}
+#vh{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 14px;border-bottom:1px solid var(--line)}#vt{font:700 16px "Bricolage Grotesque",sans-serif;flex:1;min-width:140px}#vm{width:100%;font-size:13px;color:var(--muted)}#vh .btn{padding:8px 14px;font-size:14px}#vbt{display:flex;gap:8px;margin-left:auto}#vt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#vb{flex:1;overflow:auto;background:#1b1e24;padding:10px;-webkit-overflow-scrolling:touch}
+.pdfpg{position:relative;margin:0 auto 12px;background:#fff;width:100%;max-width:900px;min-height:140px}.pdfpg canvas{display:block;width:100%;height:auto}
+.pdfpg:empty::after{content:"Loading…";position:absolute;inset:0;display:grid;place-items:center;color:#667;font-size:14px}
+.sub{transition:transform .25s,box-shadow .25s}.sub:hover{box-shadow:0 16px 32px -14px var(--c)}.card{transition:transform .25s,border-color .25s}
+@media (prefers-reduced-motion:no-preference){.up{animation:up .55s both}@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+.sub:hover{transform:translateY(-6px)}.card:hover{transform:translateY(-3px)}
+.sub svg{animation:fl 4s ease-in-out infinite}.sub:hover svg{animation-duration:1.1s}@keyframes fl{50%{transform:translateY(-7px) rotate(-3deg)}}}
+.logo img{height:42px;width:auto;display:block}.wm{display:flex;flex-direction:column;line-height:1}.wm b{border:0;padding:0;border-radius:0;font:800 24px "Bricolage Grotesque",sans-serif;letter-spacing:-.02em;color:#fff}.wm em{font-style:normal;background:linear-gradient(90deg,#38bdf8,#8b5cf6);-webkit-background-clip:text;background-clip:text;color:transparent}.wm small{font-size:10px;color:var(--muted);letter-spacing:.04em;margin-top:4px;white-space:nowrap}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.day{display:flex;flex-direction:column;align-items:center;min-width:62px;line-height:1.25}.day small{font-size:11px;opacity:.8}
+.pg{margin:18px 0 6px;font-size:14px;color:var(--muted)}
+.pb{height:10px;border-radius:99px;background:var(--surface);border:1px solid var(--line);overflow:hidden;margin-top:6px}
+.pb i{display:block;height:100%;width:0;background:var(--a);transition:width .5s}
+.add{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.add input,.add select{background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:9px;padding:10px;font:inherit;min-width:0}
+.add .grow{flex:1 1 200px}
+.task{display:flex;align-items:center;gap:10px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--a);border-radius:12px;padding:10px 12px;margin-bottom:10px;transition:opacity .2s,transform .2s}
+.task input[type=checkbox]{width:20px;height:20px;accent-color:var(--a);flex:none}
+.task .tx{flex:1;background:transparent;border:0;color:var(--text);font:inherit;min-width:0;padding:4px}
+.task.done .tx{text-decoration:line-through;color:var(--muted)}
+.task .meta{font-size:12px;color:var(--muted);white-space:nowrap}
+.del{background:transparent;border:0;cursor:pointer;font-size:16px}
+.task.out{opacity:0;transform:translateX(30px)}
+@media (prefers-reduced-motion:no-preference){.task.done{animation:pop .35s}@keyframes pop{50%{transform:scale(1.03)}}.pb i.full{animation:glow 1s ease-in-out infinite alternate}@keyframes glow{to{box-shadow:0 0 14px var(--a)}}}
+.hero2{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-items:center;padding:14px 0 10px}
+.eyebrow2{display:flex;align-items:center;gap:10px;font-size:12px;letter-spacing:.12em;color:var(--muted);margin:0 0 22px}
+.eyebrow2 i{width:7px;height:7px;border-radius:50%;background:#6f86ff;box-shadow:0 0 10px #6f86ff}
+.big{font:500 clamp(44px,8.5vw,84px)/1 Inter,sans-serif;letter-spacing:-.035em}
+.big em{display:block;font:italic 400 clamp(46px,8.8vw,90px)/1 "Instrument Serif",Georgia,serif;letter-spacing:-.01em;margin-top:6px}
+.cta2{display:flex;gap:12px;flex-wrap:wrap}
+.btn.light{background:#fff;color:#0a0c10}.btn.dark{background:transparent;color:#fff;border:1px solid #ffffff40}
+.btn.light,.btn.dark{padding:14px 22px;border-radius:6px}
+.search.wide{margin:6px 0 10px;padding:14px;border-radius:12px}.search.wide .btn{background:#fff;color:#0a0c10;border-radius:6px}
+.back{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);color:var(--text);border-radius:999px;padding:8px 16px;font:inherit;font-size:14px;cursor:pointer;text-decoration:none;margin-bottom:14px}
+.back:hover{border-color:var(--a)}
+.orbit{position:relative;height:440px;overflow:hidden}
+.ring{position:absolute;border-radius:50%;border:1px solid #ffffff22;left:36%;top:50%;transform:translate(-50%,-50%)}
+.r1{width:230px;height:230px}.r2{width:330px;height:330px;border-style:dashed}.r3{width:430px;height:430px}
+.orb{position:absolute;left:36%;top:50%;width:170px;height:170px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle at 35% 30%,#ffffff40,#0000 42%),conic-gradient(from 200deg,#2b2f6e,#ff8a3d,#a678ff,#38bdf8,#2b2f6e);box-shadow:0 0 70px #6f86ff55,inset -14px -14px 40px #000a}
+.pt{position:absolute;display:flex;gap:10px;align-items:flex-start;text-decoration:none;font-size:12px;color:var(--muted);line-height:1.4}
+.pt b{width:9px;height:9px;border-radius:50%;background:var(--d);margin-top:3px;box-shadow:0 0 10px var(--d);flex:none}
+.pt u{display:block;text-decoration:none;color:var(--d);letter-spacing:.08em;margin-bottom:3px}
+.pt:hover u{text-decoration:underline}
+.p1{--d:#6f86ff;left:60%;top:10%}.p2{--d:#4ade80;left:68%;top:32%}.p3{--d:#a78bfa;left:68%;top:54%}.p4{--d:#fb923c;left:60%;top:76%}
+@media (prefers-reduced-motion:no-preference){.r2{animation:spin 60s linear infinite}.r3{animation:spin 90s linear infinite reverse}.orb{animation:orb 6s ease-in-out infinite alternate}@keyframes spin{to{transform:translate(-50%,-50%) rotate(360deg)}}@keyframes orb{to{box-shadow:0 0 110px #a678ff77,inset -14px -14px 40px #000a}}}
+@media (max-width:760px){.hero2{grid-template-columns:1fr}.orbit{height:330px}.r1{width:150px;height:150px}.r2{width:230px;height:230px}.r3{width:310px;height:310px}.orb{width:110px;height:110px}.ring,.orb{left:30%}.pt{font-size:11px}.p1{left:50%;top:6%}.p2{left:58%;top:30%}.p3{left:58%;top:54%}.p4{left:50%;top:78%}}
+@media (max-width:760px){.hero{grid-template-columns:1fr}.art{height:260px;order:-1}.art .c1{width:190px;height:190px}.art .c3{width:150px;height:150px}.fg{grid-template-columns:1fr 1fr}.fg div:first-child{grid-column:1/-1}}
+
+/* Notiva brand refresh and supplied visual sections */
+
+@media(max-width:760px){nav{flex-wrap:wrap;gap:4px}.links{width:100%}}
+
+/* Gamified learning section */
+.gamify{padding:50px 0}
+.gamify-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:16px;margin-bottom:28px}
+.gamify-head h2{font-size:clamp(28px,5vw,42px);font-weight:800;letter-spacing:-.02em;line-height:1.1}
+.gamify-head h2 span{color:var(--a)}
+.gamify-head p{color:var(--muted);max-width:28em;margin:0;font-size:15px}
+.g-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:20px;align-items:stretch}
+@media(max-width:820px){.g-grid{grid-template-columns:1fr}}
+.g-card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px;position:relative;overflow:hidden}
+.g-card::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 20% 0%,#c8f54215,transparent 55%);pointer-events:none}
+.streak-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:280px}
+.streak-ring{position:relative;width:180px;height:180px}
+.streak-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.streak-ring circle{fill:none;stroke-width:12;stroke-linecap:round}
+.streak-ring .bg{stroke:#252a33}
+.streak-ring .fg{stroke:var(--a);stroke-dasharray:440;stroke-dashoffset:440;transition:stroke-dashoffset 1.4s cubic-bezier(.2,.8,.2,1)}
+.streak-num{position:absolute;inset:0;display:grid;place-items:center;text-align:center;pointer-events:none}
+.streak-num b{font:800 48px "Bricolage Grotesque",sans-serif;line-height:1;color:#fff}
+.streak-num small{display:block;font-size:12px;color:var(--a);letter-spacing:.06em;margin-top:4px}
+.streak-label{font-size:14px;color:var(--muted);text-align:center}
+.streak-label strong{color:var(--a)}
+.prog-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
+.prog-top h3{font-size:16px;font-weight:600;margin:0}
+.prog-top span{font-size:13px;color:var(--muted);background:#1a1e26;padding:4px 10px;border-radius:999px}
+.xp-bar{margin-bottom:22px}
+.xp-bar .meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:6px}
+.xp-bar .meta b{color:var(--a);font-weight:600}
+.xp-track{height:10px;background:#252a33;border-radius:99px;overflow:hidden}
+.xp-fill{height:100%;width:0;background:linear-gradient(90deg,#c8f542,#8bff6a);border-radius:99px;transition:width 1.5s cubic-bezier(.2,.8,.2,1)}
+.syllabus{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center}
+.syl-ring{position:relative;width:110px;height:110px}
+.syl-ring svg{width:100%;height:100%;transform:rotate(-90deg)}
+.syl-ring circle{fill:none;stroke-width:10;stroke-linecap:round}
+.syl-ring .bg{stroke:#252a33}
+.syl-ring .fg{stroke:#f59e0b;stroke-dasharray:283;stroke-dashoffset:283;transition:stroke-dashoffset 1.6s cubic-bezier(.2,.8,.2,1)}
+.syl-num{position:absolute;inset:0;display:grid;place-items:center;font:800 26px "Bricolage Grotesque",sans-serif}
+.syl-side h4{margin:0 0 4px;font-size:15px}
+.syl-side p{margin:0;font-size:13px;color:var(--muted)}
+@media (prefers-reduced-motion:no-preference){
+.g-card{animation:up .6s both}
+@keyframes pulse-fire{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.streak-num b{animation:pulse-fire 2.5s ease-in-out infinite}
+}
+
+.wk{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.wk div{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--muted)}
+.wk i{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:2px solid #2a303a;font-style:normal;font-size:14px;transition:.4s}
+.wk i.on{background:var(--a);border-color:var(--a);color:#0a0c10}.wk i.today{border-color:#fff}
+.chips3{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 18px}
+.chips3 div{background:#1a1e26;border:1px solid #2a303a;border-radius:12px;padding:8px 12px;font-size:12px;color:var(--muted)}
+.chips3 b{display:block;font:700 20px "Bricolage Grotesque",sans-serif;color:#fff}
+.bds{display:grid;grid-template-columns:repeat(auto-fit,minmax(88px,1fr));gap:10px;margin-top:20px}
+.bd{text-align:center;font-size:11px;color:var(--muted);line-height:1.3}
+.bd i{display:grid;place-items:center;width:52px;height:52px;margin:0 auto 6px;border-radius:14px;background:#1a1e26;border:1px solid #2a303a;font-style:normal;font-size:24px;filter:grayscale(1);opacity:.45;transition:.4s}
+.bd.on i{filter:none;opacity:1;border-color:var(--a);box-shadow:0 0 16px #c8f54230}
+.bd b{display:block;color:var(--text);font-weight:500;font-size:12px}
+.mini{display:flex;gap:10px;flex-wrap:wrap;margin:0 0 18px}
+.mini span{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:13px;color:var(--muted)}.mini b{color:var(--a)}
+.phead{display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.padd{width:190px;height:auto;flex:none}.ck{stroke-dasharray:26;stroke-dashoffset:0}
+.timer{text-align:center}
+.tr{position:relative;width:190px;height:190px;margin:0 auto 14px}.tr svg{width:100%;height:100%;transform:rotate(-90deg)}
+.tr circle{fill:none;stroke-width:8;stroke-linecap:round}.tr .bg{stroke:#252a33}
+.tr .fg{stroke:var(--a);stroke-dasharray:339.3;stroke-dashoffset:0;transition:stroke-dashoffset 1s linear}
+.timer .tr b{position:absolute;inset:0;display:grid;place-items:center;margin:0;font-size:44px}
+.fm{min-height:22px;margin:12px 0 0;font-size:14px;color:var(--a)}
+.tipg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin-top:10px}
+.tp{display:flex;gap:14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}
+.tp i{font-style:normal;font-size:30px}.tp p{margin:0;color:var(--muted);font-size:14px}
+.scene{position:relative;width:210px;height:150px;flex:none}.fe{position:absolute;font-size:30px}
+.e1{left:10px;top:20px}.e2{right:20px;top:10px}.e3{left:70px;top:96px}.e4{right:6px;bottom:20px}
+.bookc{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-size:64px}
+@media (prefers-reduced-motion:no-preference){
+.ck{animation:draw 4.5s ease-in-out infinite}.ck2{animation-delay:.9s}.ck3{animation-delay:1.8s}
+@keyframes draw{0%,8%{stroke-dashoffset:26}30%,80%{stroke-dashoffset:0}100%{stroke-dashoffset:26}}
+.fl{animation:drift 4s ease-in-out infinite alternate}
+.fe{animation:drift 5s ease-in-out infinite alternate}.e2{animation-delay:-1s}.e3{animation-delay:-2s}.e4{animation-delay:-3s}
+@keyframes drift{from{transform:translateY(0) rotate(-6deg)}to{transform:translateY(-14px) rotate(8deg)}}
+.bookc{animation:bob 3s ease-in-out infinite}@keyframes bob{50%{transform:translate(-50%,-56%) scale(1.06)}}
+.tp{animation:up .5s both;animation-delay:calc(var(--d)*90ms)}.tp:hover i{animation:wig .5s}
+@keyframes wig{25%{transform:rotate(-14deg)}75%{transform:rotate(14deg)}}
+.timer.run .tr{animation:breath 2.4s ease-in-out infinite}@keyframes breath{50%{filter:drop-shadow(0 0 14px var(--a))}}
+.bd.on i{animation:pop2 .6s}@keyframes pop2{50%{transform:scale(1.15)}}
+}
+
+.scene2{position:relative;height:440px;overflow:hidden;border-radius:24px}
+.desk{position:absolute;left:50%;top:50%;width:min(350px,88%);height:auto;transform:translate(-50%,-48%)}
+.bub{position:absolute;display:flex;align-items:center;gap:6px;text-decoration:none;color:#fff;background:#14171dd9;border:1px solid var(--bc);border-radius:999px;padding:8px 14px;font-size:13px}
+.bub:hover{background:var(--bc)}
+.b1{--bc:#6f86ff;left:2%;top:8%}.b2{--bc:#4ade80;right:2%;top:14%}.b3{--bc:#a78bfa;left:0;bottom:14%}.b4{--bc:#fb923c;right:3%;bottom:8%}
+.fq{position:absolute;font:italic 400 19px "Instrument Serif",Georgia,serif;color:#aab1c0;opacity:.8}
+.q1{left:36%;top:3%}.q2{right:24%;top:34%}.q3{left:5%;top:44%}.q4{right:8%;top:58%}.q5{left:28%;bottom:1%}.q6{right:34%;bottom:24%}
+@media(max-width:760px){.scene2{height:390px}}
+@media (prefers-reduced-motion:no-preference){
+.bub{animation:fl3 5s ease-in-out infinite alternate}.b2{animation-delay:-1.2s}.b3{animation-delay:-2.4s}.b4{animation-delay:-3.6s}
+@keyframes fl3{to{transform:translateY(-10px)}}
+.fq{animation:rise 9s linear infinite}.q2{animation-delay:-1.5s}.q3{animation-delay:-3s}.q4{animation-delay:-4.5s}.q5{animation-delay:-6s}.q6{animation-delay:-7.5s}
+@keyframes rise{0%{transform:translateY(24px);opacity:0}15%,85%{opacity:.85}100%{transform:translateY(-50px);opacity:0}}
+.stud{animation:bobs 3.5s ease-in-out infinite}@keyframes bobs{50%{transform:translateY(-4px)}}
+.cone{animation:flick 3s ease-in-out infinite}@keyframes flick{0%,100%{opacity:1}45%{opacity:.75}50%{opacity:.95}}
+.wr{stroke-dasharray:30;animation:wr 3s ease-in-out infinite}@keyframes wr{0%{stroke-dashoffset:30}60%,100%{stroke-dashoffset:0}}
+.tw{animation:tw 2.4s ease-in-out infinite alternate}@keyframes tw{from{opacity:.15}to{opacity:1}}
+}
+
+@media(max-width:600px){.subs{grid-template-columns:1fr 1fr;gap:10px}.sub{min-height:172px;padding:14px;border-radius:14px}.sub h3{font-size:17px}.sub p{font-size:11px}.sub svg{height:62px;margin:6px 0}.sub>span{font-size:12px;line-height:1.3}}
+.goals{display:grid;gap:6px;width:100%;margin-top:4px}
+.gt{font-size:13px;color:var(--muted);margin:8px 0 0;text-align:center}
+.gl{font-size:13px;color:var(--muted);background:#1a1e26;border:1px solid #2a303a;border-radius:10px;padding:8px 12px}.gl.ok{color:var(--text);border-color:var(--a)}
+.qc{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px}
+.qc h3{font-size:16px;margin:0 0 12px;line-height:1.35}
+.qo{display:grid;grid-template-columns:1fr 1fr;gap:8px}@media(max-width:520px){.qo{grid-template-columns:1fr}}
+.opt{background:#1a1e26;border:1px solid #2a303a;color:var(--text);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px;text-align:left;cursor:pointer;transition:.2s}
+.opt:hover{border-color:var(--a)}.opt.ok{background:#14532d;border-color:#4ade80}.opt.bad{background:#5b1a1a;border-color:#f87171}
+.ex{margin:10px 0 0;font-size:13px;color:var(--muted)}
+.logq{margin-top:26px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px}.logq h3{font-size:16px;margin:0 0 6px}
+#vr{width:100%;font-size:13px;color:var(--a)}
+.pgx{margin:6px 0 8px;font-size:14px;color:var(--muted)}
+.cp{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:8px;cursor:pointer;transition:border-color .2s,transform .2s}
+.cp:hover{border-color:var(--a)}.cp.done{border-color:var(--a)}
+.cpn{width:28px;height:28px;border-radius:50%;display:grid;place-items:center;background:#1a1e26;font-size:12px;color:var(--muted);flex:none;transition:.3s}
+.cp.done .cpn{background:var(--a);color:#0a0c10}
+.cpt{flex:1;font-size:15px;line-height:1.35}.cpk{font-size:18px}
+.qm{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--a);margin-bottom:6px}
+.sol{margin-top:10px;padding:8px 12px;border-left:3px solid var(--a);background:#0f1217;border-radius:8px}.sol .ex{white-space:pre-line;margin:6px 0}
+.cps{display:block;font-size:12px;color:var(--muted);margin-top:2px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav><a class="logo" href="#home" aria-label="Notiva home"><img src="assets/notiva-emblem.png" alt="Notiva logo"><span class="wm"><b>Noti<em>va</em></b><small>Smart notes. Better scores.</small></span></a><div class="links" id="links"></div></nav>
+<main>
+<section class="page" id="p-home">
+<div class="hero2"><div>
+<p class="eyebrow2"><i></i>NOTIVA · SMART NOTES, BETTER SCORES</p>
+<h1 class="big">Unlock Knowledge. <em>Excel Everywhere.</em></h1>
+<p class="lead">Your all-in-one place for study books, notes and question papers across Physics, Chemistry, Math and Bio.</p>
+<div class="cta2"><button class="btn light" id="ex">Explore Resources ↗</button><a class="btn dark" href="#subjects">Browse Subjects ▦</a></div>
+</div>
+<div class="scene2">
+<svg class="desk" viewBox="0 0 320 300" role="img" aria-label="Animated student studying at a desk with a lamp">
+<defs><radialGradient id="lampglow" cx="50%" cy="0%" r="95%"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".5"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient><symbol id="stu" viewBox="0 0 200 220"><path d="M30 220C30 150 66 126 100 126s70 24 70 94z" fill="#15171c"/><path d="M84 126l16 22 16-22" fill="none" stroke="#2c3038" stroke-width="5"/><rect x="88" y="98" width="24" height="34" rx="10" fill="#cfd3da"/><circle cx="100" cy="78" r="30" fill="#dde0e6"/><path d="M66 74c-6-30 16-46 38-42 22 3 32 22 28 46-8-16-18-22-34-22-14 0-26 6-32 18z" fill="#15171c"/><circle cx="72" cy="52" r="10" fill="#15171c"/><circle cx="92" cy="44" r="12" fill="#15171c"/><circle cx="114" cy="46" r="12" fill="#15171c"/><circle cx="132" cy="58" r="9" fill="#15171c"/><path d="M88 84q4 3 8 0M106 84q4 3 8 0" stroke="#15171c" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M52 176l48-14 48 14v38l-48-12-48 12z" fill="#f4f5f7"/><path d="M100 162v52" stroke="#9aa0ab" stroke-width="3"/><path d="M62 186l30 8M62 196l30 8M138 186l-30 8M138 196l-30 8" stroke="#b9bec8" stroke-width="2"/></symbol></defs>
+<circle cx="160" cy="132" r="120" fill="var(--a)" opacity=".12"/>
+<g transform="translate(56 64)"><circle r="24" fill="#14171d" stroke="#3a4150" stroke-width="3"/><path d="M0 0V-11" stroke="#fff" stroke-width="3" stroke-linecap="round"/><path d="M0 0V-18" stroke="var(--a)" stroke-width="2" stroke-linecap="round"><animateTransform attributeName="transform" type="rotate" from="0" to="360" dur="8s" repeatCount="indefinite"/></path><circle r="2.5" fill="#fff"/></g>
+<path class="cone" d="M214 100L148 232 274 232Z" fill="url(#lampglow)"/>
+<g class="stud"><use href="#stu" x="68" y="62" width="150" height="165"/></g>
+<rect x="14" y="226" width="292" height="16" rx="8" fill="#2a303a"/><rect x="44" y="242" width="10" height="42" rx="3" fill="#1d2129"/><rect x="266" y="242" width="10" height="42" rx="3" fill="#1d2129"/>
+<ellipse cx="248" cy="226" rx="24" ry="5" fill="#3a4150"/><path d="M248 224L262 150 222 112" fill="none" stroke="#9aa3b2" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M200 106l30-14 14 26-30 12z" fill="var(--a)"/>
+<rect x="26" y="214" width="48" height="12" rx="3" fill="#f4f5f7"/><path class="wr" d="M32 220h30" stroke="#3b3bf0" stroke-width="2" stroke-linecap="round" fill="none"/>
+<text class="tw" x="272" y="52" font-size="16" fill="#fff">✦</text><text class="tw" x="32" y="150" font-size="12" fill="#fff" style="animation-delay:-1s">✦</text><text class="tw" x="290" y="176" font-size="12" fill="#fff" style="animation-delay:-1.8s">✦</text>
+</svg>
+<a class="bub b1" href="#physics">⚛️ Physics</a><a class="bub b2" href="#chemistry">🧪 Chemistry</a><a class="bub b3" href="#math">📐 Math</a><a class="bub b4" href="#bio">🌿 Bio</a>
+<span class="fq q1">E = mc²</span><span class="fq q2">H₂O</span><span class="fq q3">π ≈ 3.14</span><span class="fq q4">ΔG &lt; 0</span><span class="fq q5">a² + b² = c²</span><span class="fq q6">DNA</span>
+</div>
+</div>
+<form class="search wide" id="sf"><input id="sq" type="search" placeholder="Search notes, papers, books" aria-label="Search"><select id="ss" aria-label="Subject"><option>All Subjects</option><option>Physics</option><option>Chemistry</option><option>Math</option><option>Bio</option><option>HSC Board</option><option>Mock Test</option></select><select id="rt" aria-label="Resource type"><option>All Resource Types</option><option>Book</option><option>Handbook</option><option>Question papers</option><option>Notes</option><option>Mind maps</option><option>NCERT highlights</option></select><button class="btn">Search ↗</button></form>
+
+<section class="blk gamify" id="gamify">
+<div class="gamify-head"><div><p class="eyebrow">Stay motivated</p><h2>LEARN. EARN.<br><span>LEVEL UP.</span></h2></div>
+<p>Finish tasks in your planner to earn XP, build a daily streak and unlock badges. Your progress is saved on this device.</p></div>
+<div class="g-grid">
+<div class="g-card"><div class="streak-wrap">
+<div class="streak-ring" id="streakRing"><svg viewBox="0 0 160 160"><circle class="bg" cx="80" cy="80" r="70"/><circle class="fg" cx="80" cy="80" r="70"/></svg><div class="streak-num"><div><b id="streakDays">0</b><small>DAY STREAK 🔥</small></div></div></div>
+<p class="streak-label" id="streakMsg"></p>
+<div class="wk" id="wk"></div><p class="gt">Do any one of these today to keep your streak:</p><div class="goals" id="goals"></div></div></div>
+<div class="g-card">
+<div class="prog-top"><h3>Your progress</h3><span id="lvl">LVL 1</span></div>
+<div class="xp-bar"><div class="meta"><span>XP TO NEXT LEVEL</span><b id="xpTxt">0 / 100</b></div><div class="xp-track"><div class="xp-fill" id="xpFill"></div></div></div>
+<div class="chips3"><div><b id="sXp">0</b>Total XP</div><div><b id="sDone">0</b>Tasks done</div><div><b id="sFocus">0</b>Focus sessions</div><div><b id="sMin">0</b>Minutes read</div><div><b id="sQ">0</b>Questions solved</div></div>
+<div class="syllabus"><div class="syl-ring" id="sylRing"><svg viewBox="0 0 100 100"><circle class="bg" cx="50" cy="50" r="45"/><circle class="fg" cx="50" cy="50" r="45"/></svg><div class="syl-num" id="sylPct">0%</div></div>
+<div class="syl-side"><h4>Weekly plan completed</h4><p id="sylTxt"></p><a class="btn" href="#planner" style="margin-top:10px;padding:8px 16px;font-size:14px">Open planner 📅</a></div></div>
+<div class="bds" id="bds"></div>
+</div></div></section>
+
+<section class="blk" id="subjects"><p class="eyebrow">Explore subjects</p><h2>Choose your subject 📚</h2>
+<div class="subs">
+<a class="sub" href="#physics" style="--c:#2f4bff"><div><h3>Physics <span>→</span></h3><p>Books, notes and papers</p></div><svg viewBox="0 0 120 120" fill="none" stroke="#fff" stroke-width="2"><ellipse cx="60" cy="60" rx="50" ry="18"/><ellipse cx="60" cy="60" rx="50" ry="18" transform="rotate(60 60 60)"/><ellipse cx="60" cy="60" rx="50" ry="18" transform="rotate(120 60 60)"/><circle cx="60" cy="60" r="7" fill="#fff"/></svg><span>Explore Physics →</span></a>
+<a class="sub" href="#chemistry" style="--c:#ff6a13"><div><h3>Chemistry <span>→</span></h3><p>Books, notes and papers</p></div><svg viewBox="0 0 120 120" fill="none" stroke="#fff" stroke-width="2"><path d="M48 10h24M52 10v34L22 100a8 8 0 007 12h62a8 8 0 007-12L68 44V10"/><path d="M34 82h52" /></svg><span>Explore Chemistry →</span></a>
+<a class="sub" href="#math" style="--c:#14b886"><div><h3>Math <span>→</span></h3><p>Books, notes and papers</p></div><svg viewBox="0 0 120 120" fill="none" stroke="#fff" stroke-width="2"><path d="M20 100L55 25l35 75z"/><circle cx="88" cy="40" r="22"/><rect x="62" y="70" width="40" height="30"/></svg><span>Explore Math →</span></a>
+<a class="sub" href="#bio" style="--c:#7c3aed"><div><h3>Bio <span>→</span></h3><p>Books, notes and papers</p></div><svg viewBox="0 0 120 120" fill="none" stroke="#fff" stroke-width="2"><path d="M60 110C20 90 20 40 60 8c40 32 40 82 0 102zM60 20v90M60 50l-18-14M60 70l20-16M60 88l-16-12"/></svg><span>Explore Bio →</span></a>
+<a class="sub" href="#hsc-board" style="--c:#e0457b"><div><h3>HSC Board <span>→</span></h3><p>Board exam material</p></div><svg viewBox="0 0 120 120" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 44L60 20l50 24-50 24zM30 56v26c0 8 60 8 60 0V56M110 44v30"/></svg><span>Explore HSC Board →</span></a>
+<a class="sub" href="#mock-test" style="--c:#0ea5e9"><div><h3>Mock Test <span>→</span></h3><p>Practice under exam time</p></div><svg viewBox="0 0 120 120" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="60" cy="66" r="38"/><path d="M60 66V40M60 66l18 10M48 14h24M60 14v14"/></svg><span>Explore Mock Test →</span></a>
+</div></section>
+<section class="blk"><p class="eyebrow">Why Notiva</p><h2>Everything you need to succeed</h2>
+<div class="feat">
+<div style="--f:#c8f542"><svg viewBox="0 0 34 34"><path d="M8 3h14l6 6v22H8zM22 3v6h6M13 16h10M13 21h10M13 26h7"/></svg><h3>📚 Books and notes</h3><p>HC Verma and handbooks, sorted by class.</p></div>
+<div style="--f:#14b886"><svg viewBox="0 0 34 34"><path d="M6 4h22v26H6zM11 11h12M11 17h12M11 23h7"/></svg><h3>📝 Question papers</h3><p>Practise with papers for your board exam.</p></div>
+<div style="--f:#ff6a13"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="12"/><circle cx="17" cy="17" r="5"/><path d="M17 2v6M17 26v6M2 17h6M26 17h6"/></svg><h3>🔎 Easy search</h3><p>Find a file by name or by subject.</p></div>
+<div style="--f:#7c8bff"><svg viewBox="0 0 34 34"><path d="M17 4v18M9 15l8 8 8-8M5 29h24"/></svg><h3>⬇️ Download PDFs</h3><p>Read in the page or save to your device.</p></div>
+</div></section>
+<section class="blk"><div class="stats" id="stats"></div></section>
+<section class="blk"><p class="eyebrow">How it works</p><h2>Simple steps to smarter learning</h2>
+<div class="steps">
+<div style="--c:#2f4bff"><i>1</i><h3>Search</h3><p>Type a book, topic or subject.</p></div>
+<div style="--c:#ff6a13"><i>2</i><h3>Choose</h3><p>Pick a subject or section.</p></div>
+<div style="--c:#14b886"><i>3</i><h3>Download</h3><p>Open the PDF or save it.</p></div>
+<div style="--c:#7c3aed"><i>4</i><h3>Study</h3><p>Use the timer and tips to stay focused.</p></div>
+</div></section>
+<section class="blk"><div class="cta"><div><h2>Ready to boost your scores?</h2><p>Pick a subject and start studying today. Notes today, progress every day. 📚</p></div><a class="btn" href="#physics">Get started 🚀</a></div></section>
+</section>
+
+<section class="page" id="p-list"><h1 class="t" id="lt"></h1><p class="lead" id="ll"></p><div class="bar" id="lf"></div><div class="grid" id="lg"></div></section>
+
+<section class="page" id="p-planner"><a class="back" href="#home">← Back to home</a><div class="phead"><div><h1 class="t">📅 Study planner</h1><p class="lead">Plan your week, tick off tasks and edit anything. Every finished task gives +10 XP. Your plan is saved on this device.</p></div>
+<svg class="padd" viewBox="0 0 200 170" aria-hidden="true"><rect x="40" y="26" width="120" height="132" rx="14" fill="#14171d" stroke="var(--a)" stroke-width="2"/><rect x="76" y="14" width="48" height="22" rx="8" fill="var(--a)"/>
+<rect x="58" y="52" width="22" height="22" rx="6" fill="none" stroke="var(--a)" stroke-width="2"/><path class="ck ck1" d="M62 63l6 6 11-13" fill="none" stroke="var(--a)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="92" y="60" width="50" height="6" rx="3" fill="#2a303a"/>
+<rect x="58" y="86" width="22" height="22" rx="6" fill="none" stroke="var(--a)" stroke-width="2"/><path class="ck ck2" d="M62 97l6 6 11-13" fill="none" stroke="var(--a)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="92" y="94" width="42" height="6" rx="3" fill="#2a303a"/>
+<rect x="58" y="120" width="22" height="22" rx="6" fill="none" stroke="var(--a)" stroke-width="2"/><path class="ck ck3" d="M62 131l6 6 11-13" fill="none" stroke="var(--a)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/><rect x="92" y="128" width="56" height="6" rx="3" fill="#2a303a"/>
+<text class="fl" x="156" y="34" font-size="26">⭐</text><text class="fl" x="14" y="150" font-size="24" style="animation-delay:-2s">✏️</text></svg></div>
+<div class="mini" id="miniP"></div>
+<div class="tabs"><button class="chip" id="tw" aria-pressed="true">🗓️ Weekly planner</button><button class="chip" id="tc" aria-pressed="false">✅ Checklist</button></div>
+<div id="pw"><div class="days" id="days"></div>
+<div class="pg"><span id="pl"></span><div class="pb"><i id="pf"></i></div></div>
+<form class="add" id="af"><input class="grow" id="ai" placeholder="Add a task, e.g. Revise Kinematics" aria-label="New task"><select id="as" aria-label="Subject"><option>⚛️ Physics</option><option>🧪 Chemistry</option><option>📐 Math</option><option>🌿 Bio</option><option>📚 Other</option></select><input id="at" type="time" aria-label="Time"><button class="btn">Add ➕</button></form>
+<div id="tl"></div></div>
+<div id="pc" hidden><div class="pg"><span id="cpl"></span><div class="pb"><i id="cpf"></i></div></div>
+<form class="add" id="cf"><input class="grow" id="ci" placeholder="Add a checklist item" aria-label="New checklist item"><button class="btn">Add ➕</button></form>
+<div id="cl"></div></div>
+</section>
+
+<section class="page" id="p-practice"><a class="back" href="#home">← Back to home</a>
+<h1 class="t">🧠 Practice</h1><p class="lead">Pick a subject, class and chapter. Each chapter has base-building questions and exam-style questions with detailed solutions. Solving 5 questions in a day keeps your streak going.</p>
+<div class="mini" id="miniQ"></div>
+<div class="bar" id="pqc"></div>
+<div class="bar" id="pqt"></div>
+<div id="pql"></div>
+<div class="logq"><h3>📘 Solved questions from your book?</h3><p class="fm" style="color:var(--muted);margin:0 0 8px">Add how many you solved. They count toward your 5-question goal.</p>
+<form class="add" id="lq"><input class="grow" id="lqn" type="number" min="1" max="100" placeholder="Number of questions" aria-label="Number of questions"><button class="btn">Add ➕</button></form><p class="fm" id="lqm"></p></div></section>
+
+<section class="page" id="p-about"><a class="back" href="#home">← Back to home</a><h1 class="t">👋 About us</h1>
+<p class="lead">Notiva is a study website with books, notes and question papers for Physics, Chemistry, Math and Bio, all in one place. Smart notes. Better scores. 🌟</p>
+<div class="card" style="max-width:380px;cursor:default"><span>Created by</span><h3 style="font-size:30px;margin:8px 0">Yug Baviskar</h3><p>Notiva</p></div></section>
+
+<section class="page" id="p-tips"><a class="back" href="#home">← Back to home</a>
+<div class="phead"><div><h1 class="t">💡 Study tips</h1><p class="lead">Start a focus session, then take a break. A finished session gives +20 XP.</p></div>
+<div class="scene" aria-hidden="true"><span class="fe e1">📚</span><span class="fe e2">✏️</span><span class="fe e3">💡</span><span class="fe e4">⭐</span><div class="bookc">📖</div></div></div>
+<div class="mini" id="miniT"></div>
+<div class="timer" id="tm"><div class="tr"><svg viewBox="0 0 120 120"><circle class="bg" cx="60" cy="60" r="54"/><circle class="fg" id="tring" cx="60" cy="60" r="54"/></svg><b id="t">25:00</b></div><button class="btn" id="go">Start</button> <button class="btn alt" id="rs">Reset</button><p class="fm" id="fmsg"></p></div>
+<div class="tipg"><div class="tp" style="--d:0"><i>⏱️</i><p>Study in 25-minute blocks with a 5-minute break.</p></div><div class="tp" style="--d:1"><i>📝</i><p>Solve past question papers under a time limit.</p></div><div class="tp" style="--d:2"><i>✍️</i><p>Write down every formula you get wrong and revisit it.</p></div><div class="tp" style="--d:3"><i>😴</i><p>Review each day's notes before you sleep.</p></div></div></section>
+</main>
+<footer><div class="fg"><div><b style="color:var(--text);font-size:18px">Notiva</b><p>Smart notes. Better scores. 🌟<br>Learn. Revise. Excel.<br>Made by Yug Baviskar</p></div>
+<div><h4>Pages</h4><a href="#home">Home</a><a href="#subjects">Subjects</a><a href="#planner">Study planner</a><a href="#practice">Practice</a><a href="#tips">Study tips</a><a href="#about">About us</a></div></div></footer>
+</div>
+<div id="vw" hidden><div id="vh"><span id="vt"></span><span id="vbt"><button class="btn" id="vd">Download</button><button class="btn alt" id="vc">Close</button></span><span id="vm"></span><span id="vr"></span></div><div id="vb"></div></div>
+<script>
+var cfg={"physics":{t:"⚛️ Physics",a:"#6f86ff",l:"All Physics books, notes and papers.",sec:1,f:function(i){return i.s=="Physics"}},
+"chemistry":{t:"🧪 Chemistry",a:"#ff8a3d",l:"All Chemistry books, notes and papers.",sec:1,f:function(i){return i.s=="Chemistry"}},
+"math":{t:"📐 Math",a:"#2fd7a3",l:"All Math books, notes and papers.",sec:1,f:function(i){return i.s=="Math"}},
+"bio":{t:"🌿 Bio",a:"#a678ff",l:"All Bio books, notes and papers.",sec:1,f:function(i){return i.s=="Bio"}},
+"hsc-board":{t:"🎓 HSC Board",a:"#ff5c9a",l:"Notes and question papers for the HSC board exam.",sec:1,f:function(i){return i.s=="HSC Board"}},
+"mock-test":{t:"📝 Mock Test",a:"#38bdf8",l:"Mock tests to practise under exam time.",sec:1,f:function(i){return i.s=="Mock Test"}},
+"search":{t:"🔎 Search results",a:"#c8f542",l:"",f:function(i){var q=sq.toLowerCase();return (sub=="All Subjects"||i.s==sub)&&(rt=="All Resource Types"||has(i,rt)||i.t==rt)&&(i.n+" "+i.s+" "+i.t+" "+i.d).toLowerCase().indexOf(q)>-1}}};
+var nav=[["home","Home"],["subjects","Subjects"],["planner","📅 Planner"],["practice","🧠 Practice"],["tips","💡 Tips"],["about","About us"]];
+// Add real files here. cats = subsections it appears in
+var items=[
+{s:"Physics",t:"Book",n:"HC Verma, Concepts of Physics Vol 1",d:"Textbook with solved examples and exercises.",u:"pdfs/hc-verma-vol-1.pdf",cats:["Class 11"]},
+{s:"Physics",t:"Book",n:"HC Verma, Concepts of Physics Vol 2",d:"Textbook with solved examples and exercises.",u:"pdfs/hc-verma-vol-2.pdf",cats:["Class 12"]},
+{s:"Physics",t:"Handbook",n:"PW Physics 2024 Handbook",d:"Quick reference for revision.",u:"pdfs/pw-physics-handbook-2024.pdf",cats:["Handbook","Class 11","Class 12"]},
+{s:"Chemistry",t:"Handbook",n:"Arihant Chemistry Handbook",d:"Quick reference for revision.",u:"pdfs/arihant-chemistry-handbook.pdf",cats:["Handbook"]},
+{s:"Math",t:"Handbook",n:"Arihant Mathematics Handbook",d:"Formulas and quick revision.",u:"pdfs/arihant-math-handbook.pdf",cats:["Handbook"]},
+{s:"Bio",t:"Handbook",n:"Arihant Biology Handbook",d:"Key facts and quick revision.",u:"pdfs/arihant-biology-handbook.pdf",cats:["Handbook"]},
+{s:"HSC Board",t:"Notes",n:"Review Writing Guide (Q.4 D)",d:"How to write a film or book review for the HSC English board exam, with model reviews.",u:"pdfs/review-writing-guide.pdf",cats:["English Notes"]},
+{s:"HSC Board",t:"Notes",n:"History of Novel, Novella and Types of Novel",d:"Mind maps on the history of the novel, the novella and 12 types of novel.",u:"pdfs/history-of-novel-mind-maps.pdf",cats:["English Notes"]},
+{s:"HSC Board",t:"Notes",n:"Compering: Writing Skill (Q.4 C)",d:"Tips, a master script and model answers for compering a programme.",u:"pdfs/compering-writing-skill.pdf",cats:["English Notes"]},
+{s:"HSC Board",t:"Notes",n:"Application for Sick Leave",d:"Model letter with a details table.",u:"pdfs/sick-leave-application.jpg",img:1,cats:["English Notes"]},
+{s:"HSC Board",t:"Notes",n:"Application for Leaving Certificate (LC)",d:"Model letter with a details table.",u:"pdfs/leaving-certificate-application.jpg",img:1,cats:["English Notes"]},
+{s:"HSC Board",t:"Notes",n:"Application for Concession in Admission Fees",d:"Model letter with a details table.",u:"pdfs/fee-concession-application.jpg",img:1,cats:["English Notes"]},
+{s:"HSC Board",t:"Notes",n:"Appreciation of the Poem: Money",d:"Notes on Money by William H. Davies: theme, devices, message and opinion.",u:"pdfs/poem-money-appreciation.jpg",img:1,cats:["English Notes"]}
+];
+var CATS=["Class 11","Class 12","Question papers","Handbook","Notes","Mind maps","NCERT highlights"];
+var CC={"Class 11":"#2f4bff","Class 12":"#ff6a13","Question papers":"#14b886","Handbook":"#7c3aed","Notes":"#e11d74","Mind maps":"#0ea5e9","NCERT highlights":"#ca8a04","English":"#f43f5e"};
+var ICON={"English":'<svg viewBox="0 0 120 120" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><text x="60" y="80" text-anchor="middle" font-size="56" font-family="Bricolage Grotesque,sans-serif" font-weight="800" fill="#fff" stroke="none">Aa</text></svg>',"Class 11": "<svg viewBox=\"0 0 120 120\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><text x=\"60\" y=\"78\" text-anchor=\"middle\" font-size=\"58\" font-family=\"Bricolage Grotesque,sans-serif\" font-weight=\"800\" fill=\"#fff\" stroke=\"none\">11</text></svg>", "Class 12": "<svg viewBox=\"0 0 120 120\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><text x=\"60\" y=\"78\" text-anchor=\"middle\" font-size=\"58\" font-family=\"Bricolage Grotesque,sans-serif\" font-weight=\"800\" fill=\"#fff\" stroke=\"none\">12</text></svg>", "Question papers": "<svg viewBox=\"0 0 120 120\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"28\" y=\"12\" width=\"64\" height=\"96\" rx=\"6\"/><path d=\"M42 36h36M42 52h36M42 68h36M42 84h20\"/></svg>", "Handbook": "<svg viewBox=\"0 0 120 120\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M26 14h58a6 6 0 016 6v84H32a6 6 0 01-6-6zM38 14v90M50 38h28M50 54h28\"/></svg>", "Notes": "<svg viewBox=\"0 0 120 120\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><rect x=\"26\" y=\"14\" width=\"68\" height=\"92\" rx=\"6\"/><path d=\"M40 40h40M40 56h40M40 72h24\"/><path d=\"M84 88l18-18 8 8-18 18-10 2z\"/></svg>", "Mind maps": "<svg viewBox=\"0 0 120 120\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"60\" cy=\"60\" r=\"14\" fill=\"#fff\"/><circle cx=\"20\" cy=\"24\" r=\"9\"/><circle cx=\"100\" cy=\"24\" r=\"9\"/><circle cx=\"20\" cy=\"96\" r=\"9\"/><circle cx=\"100\" cy=\"96\" r=\"9\"/><path d=\"M27 31l23 20M93 31L70 51M27 89l23-20M93 89L70 69\"/></svg>", "NCERT highlights": "<svg viewBox=\"0 0 120 120\" fill=\"none\" stroke=\"#fff\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M60 10l15 33 36 4-27 24 8 35-32-18-32 18 8-35L9 47l36-4z\"/></svg>"};
+function has(i,c){return i.cats.indexOf(c)>-1}
+var sel="All",sq="",sub="All Subjects",rt="All Resource Types",sel2="All";
+function esc(x){return String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;")}
+var links=document.getElementById("links");
+nav.forEach(function(p){var a=document.createElement("a");a.href="#"+p[0];a.textContent=p[1];a.dataset.id=p[0];links.appendChild(a)});
+var uniq={};items.forEach(function(i){uniq[i.u]=1});
+document.getElementById("stats").innerHTML='<div><b>'+Object.keys(uniq).length+'</b><span>Files</span></div><div><b>4</b><span>Subjects</span></div><div><b>6</b><span>Sections</span></div><div><b>PDF</b><span>Read or download</span></div>';
+function back(label,fn){var b=document.createElement("button");b.className="back";b.textContent=label;b.onclick=fn;return b}
+function card(i){var a=document.createElement("a");a.className="card";a.href=i.u;a.onclick=function(e){e.preventDefault();openPdf(i)};a.innerHTML="<span>"+esc(i.s)+" · "+esc(i.t)+"</span><h3>"+esc(i.n)+"</h3><p>"+esc(i.d)+"</p><span>Open PDF</span>";return a}
+function chips(f,opts,h){opts.forEach(function(s){var b=document.createElement("button");b.className="chip";b.textContent=s;b.setAttribute("aria-pressed",s==sel);b.onclick=function(){sel=s;fill(h)};f.appendChild(b)})}
+function fill(h){
+ var c=cfg[h],f=document.getElementById("lf"),g=document.getElementById("lg");f.innerHTML="";g.innerHTML="";g.className="grid";
+ document.getElementById("lt").textContent=c.t;
+ document.getElementById("ll").textContent=h=="search"?'Results for "'+(sq||"all files")+'" in '+sub+'.':c.l;
+ var base=items.filter(c.f);
+ if(c.sec){
+  g.className="";
+  if(sel=="All"){
+   f.appendChild(back("← Back to home",function(){location.hash="home"}));
+   var tg=document.createElement("div");tg.className="subs";g.appendChild(tg);
+   (h=="hsc-board"?["English"]:[]).concat(CATS).forEach(function(cat,k){var n=base.filter(function(i){return cat=="English"?(has(i,"English Notes")||has(i,"English Question papers")):has(i,cat)}).length;
+    var a=document.createElement("a");a.href="#"+h;a.className="sub up";a.style.cssText="--c:"+CC[cat]+";animation-delay:"+(k*70)+"ms";
+    a.innerHTML="<div><h3>"+cat+" <span>→</span></h3><p>"+(n?n+(n>1?" files":" file"):"No files yet")+"</p></div>"+ICON[cat]+"<span>Open "+cat+" →</span>";
+    a.onclick=function(e){e.preventDefault();sel=cat;fill(h)};tg.appendChild(a)});
+   return}
+  if(sel=="English"){
+   var hd0=document.createElement("h2");hd0.textContent="English";hd0.style.cssText="font-size:26px;margin:6px 0 14px;color:"+CC.English;
+   if(sel2=="All"){
+    f.appendChild(back("← Back to "+c.t,function(){sel="All";fill(h)}));g.appendChild(hd0);
+    var tg2=document.createElement("div");tg2.className="subs";g.appendChild(tg2);
+    ["Notes","Question papers"].forEach(function(nm,k){var n=base.filter(function(i){return has(i,"English "+nm)}).length;
+     var a=document.createElement("a");a.href="#"+h;a.className="sub up";a.style.cssText="--c:"+CC[nm]+";animation-delay:"+(k*70)+"ms";
+     a.innerHTML="<div><h3>"+nm+" <span>→</span></h3><p>"+(n?n+(n>1?" files":" file"):"No files yet")+"</p></div>"+ICON[nm]+"<span>Open "+nm+" →</span>";
+     a.onclick=function(e){e.preventDefault();sel2=nm;fill(h)};tg2.appendChild(a)});
+    return}
+   f.appendChild(back("← Back to English",function(){sel2="All";fill(h)}));
+   var col2=CC[sel2],hd2=document.createElement("h2");hd2.textContent="English · "+sel2;hd2.style.cssText="font-size:26px;margin:6px 0 14px;color:"+col2;g.appendChild(hd2);
+   var gr2=document.createElement("div");gr2.className="grid";g.appendChild(gr2);
+   var l2=base.filter(function(i){return has(i,"English "+sel2)});
+   if(!l2.length)gr2.innerHTML='<div class="empty">No files yet.</div>';else l2.forEach(function(i,k){var cd=card(i);cd.style.borderTop="4px solid "+col2;cd.style.animationDelay=(k*70)+"ms";cd.classList.add("up");gr2.appendChild(cd)});
+   return}
+  f.appendChild(back("← Back to "+c.t,function(){sel="All";fill(h)}));
+  var col=CC[sel],hd=document.createElement("h2");hd.textContent=sel;hd.style.cssText="font-size:26px;margin:6px 0 14px;color:"+col;g.appendChild(hd);
+  var gr=document.createElement("div");gr.className="grid";g.appendChild(gr);
+  var l=base.filter(function(i){return has(i,sel)});
+  if(!l.length)gr.innerHTML='<div class="empty">No files yet.</div>';else l.forEach(function(i,k){var cd=card(i);cd.style.borderTop="4px solid "+col;cd.style.animationDelay=(k*70)+"ms";cd.classList.add("up");gr.appendChild(cd)});
+  return}
+ if(h=="search")f.appendChild(back("← Back to home",function(){location.hash="home"}));
+ var list=base.filter(function(i){return !c.chips||sel=="All"||i.s==sel});
+ if(!list.length){g.innerHTML='<div class="empty">No files yet. New uploads will appear here.</div>';return}
+ list.forEach(function(i){g.appendChild(card(i))});
+}
+function route(){
+ var h=(location.hash||"#home").slice(1);if(!{home:1,subjects:1,tips:1,planner:1,practice:1,about:1}[h]&&!cfg[h])h="home";
+ var pid=(h=="home"||h=="subjects")?"p-home":h=="tips"?"p-tips":h=="planner"?"p-planner":h=="practice"?"p-practice":h=="about"?"p-about":"p-list";
+ document.querySelectorAll(".page").forEach(function(s){s.classList.toggle("on",s.id==pid)});
+ document.documentElement.style.setProperty("--a",(h=="home"||h=="subjects")?"#c8f542":h=="tips"?"#6fe3a8":h=="planner"?"#ffb454":h=="practice"?"#38bdf8":h=="about"?"#a78bfa":cfg[h].a);
+ links.querySelectorAll("a").forEach(function(a){if(a.dataset.id==h)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+ if(pid=="p-list"){if(h!="search"){sel="All";sel2="All"}fill(h)}
+ if(h=="subjects"){var el=document.getElementById("subjects");if(el)el.scrollIntoView({behavior:"smooth"})}else window.scrollTo(0,0);
+}
+function exploreAll(){sq="";sub="All Subjects";rt="All Resource Types";if(location.hash=="#search")route();else location.hash="search"}
+document.getElementById("ex").onclick=exploreAll;
+function doSearch(q){sq=q;sub=document.getElementById("ss").value;rt=document.getElementById("rt").value;if(location.hash=="#search")route();else location.hash="search"}
+document.getElementById("sf").onsubmit=function(e){e.preventDefault();doSearch(document.getElementById("sq").value)};
+document.querySelectorAll(".pop button").forEach(function(b){b.onclick=function(){document.getElementById("sq").value=b.dataset.q;doSearch(b.dataset.q)}});
+window.addEventListener("hashchange",route);route();
+var vw=document.getElementById("vw"),cur=null,vm=document.getElementById("vm"),pdfDoc=null,vtoken=0,vobs=null;
+function loadPdfJs(cb){
+ if(window.pdfjsLib){cb(true);return}
+ var sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js";
+ sc.onload=function(){pdfjsLib.GlobalWorkerOptions.workerSrc="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";cb(true)};
+ sc.onerror=function(){cb(false)};document.head.appendChild(sc)}
+function renderPage(doc,d,tok){
+ if(d.dataset.r)return;d.dataset.r="1";
+ doc.getPage(+d.dataset.n).then(function(pg){
+  if(tok!=vtoken||!d.dataset.r)return;
+  var v1=pg.getViewport({scale:1}),w=d.clientWidth||300,sc=(w/v1.width)*Math.min(window.devicePixelRatio||1,2),vp=pg.getViewport({scale:sc});
+  var c=document.createElement("canvas");c.width=Math.floor(vp.width);c.height=Math.floor(vp.height);
+  pg.render({canvasContext:c.getContext("2d"),viewport:vp}).promise.then(function(){if(tok!=vtoken||!d.dataset.r)return;d.style.aspectRatio=v1.width+"/"+v1.height;d.innerHTML="";d.appendChild(c)},function(){})
+ })}
+function buildPages(doc,tok){
+ var vb=document.getElementById("vb");vb.innerHTML="";
+ doc.getPage(1).then(function(p1){
+  if(tok!=vtoken)return;
+  var v=p1.getViewport({scale:1}),ar=v.width+"/"+v.height;
+  vobs=new IntersectionObserver(function(es){es.forEach(function(e){var d=e.target;if(e.isIntersecting)renderPage(doc,d,tok);else if(d.dataset.r){delete d.dataset.r;d.innerHTML=""}})},{root:vb,rootMargin:"700px 0px"});
+  for(var n=1;n<=doc.numPages;n++){var d=document.createElement("div");d.className="pdfpg";d.dataset.n=n;d.style.aspectRatio=ar;vb.appendChild(d);vobs.observe(d)}
+ })}
+function openPdf(i){
+ cur=i;var vb=document.getElementById("vb"),tok=++vtoken;
+ document.getElementById("vt").textContent=i.n;vm.textContent="";document.getElementById("vr").textContent="";
+ vb.innerHTML="";vb.scrollTop=0;vw.hidden=false;document.body.style.overflow="hidden";
+ if(i.img){var im=new Image();im.src=i.u;im.alt=i.n;im.style.cssText="display:block;width:100%;max-width:900px;margin:0 auto;border-radius:8px;background:#fff";vb.appendChild(im);return}
+ vm.textContent="Loading PDF…";
+ loadPdfJs(function(ok){
+  if(tok!=vtoken)return;
+  if(!ok){vm.textContent="Could not load the PDF viewer. Please use Download.";return}
+  pdfjsLib.getDocument(i.u).promise.then(function(doc){
+   if(tok!=vtoken){doc.destroy();return}
+   pdfDoc=doc;vm.textContent=doc.numPages+(doc.numPages>1?" pages":" page");buildPages(doc,tok)
+  },function(){if(tok==vtoken)vm.textContent="Could not open this PDF. Please use Download."})
+ })}
+function closeViewer(){vtoken++;if(pdfDoc){try{pdfDoc.destroy()}catch(e){}pdfDoc=null}if(vobs){vobs.disconnect();vobs=null}document.getElementById("vb").innerHTML="";vw.hidden=true;document.body.style.overflow=""}
+document.getElementById("vc").onclick=closeViewer;
+document.getElementById("vd").onclick=function(){var a=document.createElement("a");a.href=cur.u;a.download=cur.u.split("/").pop();document.body.appendChild(a);a.click();a.remove()};
+var DAYS=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"],P=null;
+try{P=JSON.parse(localStorage.getItem("sn-plan"))}catch(e){}
+if(!P||!P.days){P={day:DAYS[(new Date().getDay()+6)%7],days:{},check:[{t:"Finish one chapter of HC Verma",d:0},{t:"Revise all formulas",d:0},{t:"Solve one past question paper",d:0},{t:"Make a mind map for a topic",d:0},{t:"Read NCERT highlights",d:0}]};DAYS.forEach(function(d){P.days[d]=[]})}
+P.xp=P.xp||0;P.done=P.done||0;P.focus=P.focus||0;P.best=P.best||0;P.log=P.log||{};P.read=P.read||{};P.qs=P.qs||{};P.qx=P.qx||{};P.readTotal=P.readTotal||0;P.qTotal=P.qTotal||0;P.readDays=P.readDays||0;P.qDays=P.qDays||0;P.qd=P.qd||{day:"",ids:{}};P.chap=P.chap||{};
+function save(){try{localStorage.setItem("sn-plan",JSON.stringify(P))}catch(e){}}
+function bar(arr,lab,fl){var n=arr.length,k=arr.filter(function(x){return x.d}).length;lab.textContent=n?(k+" of "+n+" done"+(k==n?" 🎉":"")):"No tasks yet";fl.style.width=(n?k/n*100:0)+"%";fl.classList.toggle("full",n>0&&k==n)}
+function dayBtns(){var el=document.getElementById("days");el.innerHTML="";DAYS.forEach(function(d){var n=P.days[d].length,k=P.days[d].filter(function(x){return x.d}).length;var b=document.createElement("button");b.className="chip day";b.setAttribute("aria-pressed",d==P.day);b.innerHTML=d+(n?"<small>"+k+"/"+n+"</small>":"");b.onclick=function(){P.day=d;save();renderPlanner()};el.appendChild(b)})}
+function refresh(){bar(P.days[P.day],document.getElementById("pl"),document.getElementById("pf"));bar(P.check,document.getElementById("cpl"),document.getElementById("cpf"));dayBtns();renderStats()}
+function listUI(arr,box,meta){
+ box.innerHTML="";
+ if(!arr.length){box.innerHTML='<div class="empty">Nothing here yet. Add your first task ✨</div>';return}
+ arr.forEach(function(x,k){
+  var r=document.createElement("div");r.className="task up"+(x.d?" done":"");r.style.animationDelay=(k*40)+"ms";
+  var cb=document.createElement("input");cb.type="checkbox";cb.checked=!!x.d;cb.setAttribute("aria-label","Done");
+  var tx=document.createElement("input");tx.className="tx";tx.value=x.t;tx.setAttribute("aria-label","Task text");
+  var del=document.createElement("button");del.className="del";del.textContent="🗑️";del.setAttribute("aria-label","Delete task");
+  cb.onchange=function(){var was=x.d?1:0;x.d=cb.checked?1:0;r.classList.toggle("done",!!x.d);if(x.d!=was)award(x.d?1:-1);save();refresh()};
+  tx.oninput=function(){x.t=tx.value;save()};
+  del.onclick=function(){r.classList.add("out");setTimeout(function(){arr.splice(arr.indexOf(x),1);save();renderPlanner()},220)};
+  r.appendChild(cb);r.appendChild(tx);
+  if(meta&&(x.s||x.tm)){var m=document.createElement("span");m.className="meta";m.textContent=(x.s||"")+(x.tm?" · "+x.tm:"");r.appendChild(m)}
+  r.appendChild(del);box.appendChild(r)})
+}
+function renderPlanner(){listUI(P.days[P.day],document.getElementById("tl"),1);listUI(P.check,document.getElementById("cl"),0);refresh()}
+document.getElementById("af").onsubmit=function(e){e.preventDefault();var i=document.getElementById("ai"),v=i.value.trim();if(!v)return;P.days[P.day].push({t:v,s:document.getElementById("as").value,tm:document.getElementById("at").value,d:0});i.value="";save();renderPlanner()};
+document.getElementById("cf").onsubmit=function(e){e.preventDefault();var i=document.getElementById("ci"),v=i.value.trim();if(!v)return;P.check.push({t:v,d:0});i.value="";save();renderPlanner()};
+function tab(w){document.getElementById("pw").hidden=w!="w";document.getElementById("pc").hidden=w!="c";document.getElementById("tw").setAttribute("aria-pressed",w=="w");document.getElementById("tc").setAttribute("aria-pressed",w=="c")}
+document.getElementById("tw").onclick=function(){tab("w")};document.getElementById("tc").onclick=function(){tab("c")};
+renderPlanner();
+var left=1500,iv=null,tt=document.getElementById("t"),go=document.getElementById("go"),tm=document.getElementById("tm"),tr=document.getElementById("tring");
+function show(){var m=Math.floor(left/60),s=left%60;tt.textContent=(m<10?"0":"")+m+":"+(s<10?"0":"")+s;tr.style.strokeDashoffset=(339.3*(1-left/1500)).toFixed(1);tm.classList.toggle("run",!!iv)}
+function focusDone(){P.focus++;P.xp+=20;var k=dk(new Date());P.log[k]=(P.log[k]||0)+1;save();renderStats();document.getElementById("fmsg").textContent="🎉 Focus session done! +20 XP. Take a 5-minute break."}
+go.onclick=function(){if(iv){clearInterval(iv);iv=null;go.textContent="Start";show();return}document.getElementById("fmsg").textContent="";go.textContent="Pause";iv=setInterval(function(){left--;if(left<=0){clearInterval(iv);iv=null;go.textContent="Start";left=1500;show();tt.textContent="Done";focusDone();return}show()},1000);show()};
+document.getElementById("rs").onclick=function(){clearInterval(iv);iv=null;left=1500;go.textContent="Start";document.getElementById("fmsg").textContent="";show()};
+show();
+function dk(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+function award(n){var k=dk(new Date());P.xp=Math.max(0,P.xp+n*10);P.done=Math.max(0,P.done+n);P.log[k]=Math.max(0,(P.log[k]||0)+n)}
+function active(k){return P.log[k]>0||(P.read[k]||0)>=600||(P.qs[k]||0)>=5}
+function streakNow(){var d=new Date(),n=0;if(!active(dk(d)))d.setDate(d.getDate()-1);while(active(dk(d))){n++;d.setDate(d.getDate()-1)}return n}
+function renderStats(){
+ function $(i){return document.getElementById(i)}
+ var st=streakNow();if(st>P.best){P.best=st;save()}
+ var lvl=Math.floor(P.xp/100)+1,into=P.xp%100,tot=0,dn=0;
+ DAYS.forEach(function(d){P.days[d].forEach(function(x){tot++;if(x.d)dn++})});
+ var pct=tot?Math.round(dn/tot*100):0;
+ $("streakDays").textContent=st;
+ $("streakRing").querySelector(".fg").style.strokeDashoffset=(440*(1-Math.min(st,7)/7)).toFixed(1);
+ $("streakMsg").innerHTML=st?("<strong>Keep it up!</strong> "+st+"-day streak. Goal: 7 days."):"Finish a task or a focus session today to start your streak.";
+ var m=new Date();m.setDate(m.getDate()-((m.getDay()+6)%7));var tk=dk(new Date()),wh="";
+ ["M","T","W","T","F","S","S"].forEach(function(l,i){var d=new Date(m);d.setDate(m.getDate()+i);var k=dk(d);wh+='<div><i class="'+(active(k)?"on":"")+(k==tk?" today":"")+'">'+(active(k)?"✓":"")+"</i>"+l+"</div>"});
+ $("wk").innerHTML=wh;
+ $("lvl").textContent="LVL "+lvl;$("xpTxt").textContent=into+" / 100";$("xpFill").style.width=into+"%";
+ $("sMin").textContent=Math.floor(P.readTotal/60);$("sQ").textContent=P.qTotal;
+ var gk=dk(new Date()),grd=Math.min(10,Math.floor((P.read[gk]||0)/60)),gq=Math.min(5,P.qs[gk]||0),gt=P.log[gk]>0;
+ $("goals").innerHTML='<div class="gl'+(gt?" ok":"")+'">'+(gt?"✅":"⬜")+" Finish a task or a focus session</div><div class=\"gl"+(grd>=10?" ok":"")+'">'+(grd>=10?"✅":"⬜")+" Read a PDF for 10 minutes ("+grd+"/10)</div><div class=\"gl"+(gq>=5?" ok":"")+'">'+(gq>=5?"✅":"⬜")+" Solve 5 questions ("+gq+"/5)</div>";
+ $("sXp").textContent=P.xp;$("sDone").textContent=P.done;$("sFocus").textContent=P.focus;
+ $("sylPct").textContent=pct+"%";$("sylRing").querySelector(".fg").style.strokeDashoffset=(283*(1-pct/100)).toFixed(1);
+ $("sylTxt").textContent=tot?(dn+" of "+tot+" tasks in your weekly planner are done."):"Add tasks in your planner to see your progress here.";
+ var B=[["🚀","First step","Finish 1 task",P.done>=1],["🔥","On fire","3-day streak",P.best>=3],["🎯","Task master","Finish 10 tasks",P.done>=10],["⏱️","Focused","1 focus session",P.focus>=1],["📖","Bookworm","Read 10 min in a day",P.readDays>=1],["🧩","Problem solver","Solve 5 questions in a day",P.qDays>=1],["🏆","Level 5","Reach level 5",lvl>=5]];
+ $("bds").innerHTML=B.map(function(b){return '<div class="bd'+(b[3]?" on":"")+'" title="'+b[2]+'"><i>'+b[0]+"</i><b>"+b[1]+"</b>"+b[2]+"</div>"}).join("");
+ var mi='<span>⭐ LVL <b>'+lvl+'</b></span><span>✨ <b>'+P.xp+'</b> XP</span><span>🔥 <b>'+st+'</b>-day streak</span>';
+ $("miniP").innerHTML=mi;$("miniT").innerHTML=mi;if($("miniQ"))$("miniQ").innerHTML=mi+'<span>🧩 <b>'+gq+'</b>/5 today</span>';
+}
+
+/* reading time: counts while the PDF viewer is open and this page is visible */
+function rdTick(){
+ if(vw.hidden||document.hidden)return;
+ var k=dk(new Date());P.read[k]=(P.read[k]||0)+1;P.readTotal++;
+ var sec=P.read[k],vr=document.getElementById("vr");
+ if(sec==600){P.readDays++;P.xp+=20;save();renderStats();vr.textContent="✅ 10 minutes done. Your streak is counted! +20 XP";return}
+ vr.textContent=sec>=600?"✅ Today's 10 minutes of reading are done.":"📖 Reading today: "+Math.floor(sec/60)+" of 10 min";
+ if(sec%10==0)save();
+ if(sec%30==0)renderStats();
+}
+setInterval(rdTick,1000);
+/* practice: chapter-wise questions (subject > class > chapter > base building / CET / JEE / NEET) */
+var CH={
+Physics:{11:["Units and Measurements","Motion in a Straight Line","Motion in a Plane","Laws of Motion","Work, Energy and Power","System of Particles and Rotational Motion","Gravitation","Mechanical Properties of Solids","Mechanical Properties of Fluids","Thermal Properties of Matter","Thermodynamics","Kinetic Theory","Oscillations","Waves"],
+12:["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics and Optical Instruments","Wave Optics","Dual Nature of Radiation and Matter","Atoms","Nuclei","Semiconductor Electronics: Materials, Devices and Simple Circuits"]},
+Chemistry:{11:["Some Basic Concepts of Chemistry","Structure of Atom","Classification of Elements and Periodicity in Properties","Chemical Bonding and Molecular Structure","Thermodynamics","Equilibrium","Redox Reactions","Organic Chemistry: Some Basic Principles and Techniques","Hydrocarbons"],
+12:["Solutions","Electrochemistry","Chemical Kinetics","The d- and f-Block Elements","Coordination Compounds","Haloalkanes and Haloarenes","Alcohols, Phenols and Ethers","Aldehydes, Ketones and Carboxylic Acids","Amines","Biomolecules"]},
+Math:{11:["Sets","Relations and Functions","Trigonometric Functions","Complex Numbers and Quadratic Equations","Linear Inequalities","Permutations and Combinations","Binomial Theorem","Sequences and Series","Straight Lines","Conic Sections","Introduction to Three Dimensional Geometry","Limits and Derivatives","Statistics","Probability"],
+12:["Relations and Functions","Inverse Trigonometric Functions","Matrices","Determinants","Continuity and Differentiability","Application of Derivatives","Integrals","Application of Integrals","Differential Equations","Vector Algebra","Three Dimensional Geometry","Linear Programming","Probability"]},
+Bio:{11:["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Structural Organisation in Animals","Cell: The Unit of Life","Biomolecules","Cell Cycle and Cell Division","Photosynthesis in Higher Plants","Respiration in Plants","Plant Growth and Development","Breathing and Exchange of Gases","Body Fluids and Circulation","Excretory Products and their Elimination","Locomotion and Movement","Neural Control and Coordination","Chemical Coordination and Integration"],
+12:["Sexual Reproduction in Flowering Plants","Human Reproduction","Reproductive Health","Principles of Inheritance and Variation","Molecular Basis of Inheritance","Evolution","Human Health and Disease","Microbes in Human Welfare","Biotechnology: Principles and Processes","Biotechnology and its Applications","Organisms and Populations","Ecosystem","Biodiversity and Conservation"]}};
+/* DATA[subject][class][chapter index] = {base:[],cet:[],jee:[],neet:[]}; question = {q,o:[4 options],a:index of correct option,e:solution,y:optional "MHT-CET 2023" etc. for real past questions} */
+var DATA={"Physics":{"11":{"0":{"base":[{"q":"Which of the following is a base (fundamental) SI unit?","o":["newton","joule","kelvin","pascal"],"a":2,"e":"The seven SI base units are metre, kilogram, second, ampere, kelvin, mole and candela.\nNewton (force), joule (energy) and pascal (pressure) are derived units, because they are built from base units.\nSo the answer is kelvin, the unit of temperature."},{"q":"What is the dimensional formula of velocity?","o":["[L T⁻¹]","[L T²]","[M L T⁻¹]","[L² T⁻¹]"],"a":0,"e":"Velocity = displacement ÷ time.\nDimension of displacement = [L] and of time = [T].\nSo velocity = [L] ÷ [T] = [L T⁻¹]."},{"q":"How many significant figures are there in 0.04050?","o":["2","3","4","5"],"a":2,"e":"Rules: leading zeros are not significant. Zeros between non-zero digits are significant. Trailing zeros after a decimal point are significant.\nIn 0.04050 the leading zeros (0.0) do not count. The digits 4, 0, 5 and the last 0 count.\nSo there are 4 significant figures."},{"q":"Which of the following is NOT a fundamental (base) SI quantity?","o":["Length","Mass","Force","Time"],"a":2,"e":"The seven SI base quantities are length, mass, time, electric current, thermodynamic temperature, amount of substance and luminous intensity.\nForce is not one of them. It is a derived quantity, because F = ma, so its unit (the newton) is built from base units: 1 N = 1 kg·m·s⁻².\nAnswer: Force."},{"q":"What is the dimensional formula of force?","o":["[M L T⁻²]","[M L² T⁻²]","[M L T⁻¹]","[M L⁻¹ T⁻²]"],"a":0,"e":"Use F = ma.\n[m] = M and [a] = [v]/[t] = (L T⁻¹)/T = L T⁻².\nSo [F] = M × L T⁻² = [M L T⁻²]."},{"q":"Two lengths are measured as 2.50 cm and 1.2 cm. What is their sum, written with the correct significant figures?","o":["3.70 cm","3.7 cm","3.8 cm","4 cm"],"a":1,"e":"In addition and subtraction, the answer is rounded to the least number of decimal places among the numbers.\n2.50 has 2 decimal places and 1.2 has 1 decimal place, so the answer keeps 1 decimal place.\n2.50 + 1.2 = 3.70, which is written as 3.7 cm."},{"q":"Which pair of quantities has the same dimensions?","o":["Impulse and linear momentum","Force and energy","Pressure and force","Power and work"],"a":0,"e":"Impulse = force × time = [M L T⁻²][T] = [M L T⁻¹].\nLinear momentum = mass × velocity = [M][L T⁻¹] = [M L T⁻¹]. These match.\nForce [M L T⁻²] and energy [M L² T⁻²] differ. Pressure [M L⁻¹ T⁻²] and force differ. Power [M L² T⁻³] and work [M L² T⁻²] differ."}],"cet":[{"q":"The dimensional formula of pressure is:","o":["[M L⁻¹ T⁻²]","[M L T⁻²]","[M L² T⁻²]","[M L⁻² T⁻²]"],"a":0,"e":"Pressure = force ÷ area.\nForce = mass × acceleration = [M][L T⁻²] = [M L T⁻²]. Area = [L²].\nPressure = [M L T⁻²] ÷ [L²] = [M L⁻¹ T⁻²]."},{"q":"Which pair of quantities has the same dimensions?","o":["Work and power","Work and torque","Force and momentum","Pressure and force"],"a":1,"e":"Work = force × distance = [M L T⁻²][L] = [M L² T⁻²].\nTorque = distance × force = [L][M L T⁻²] = [M L² T⁻²]. So work and torque match.\nPower has [M L² T⁻³], momentum has [M L T⁻¹] while force has [M L T⁻²], and pressure has [M L⁻¹ T⁻²], so the other pairs differ."}],"jee":[{"q":"Using dimensional analysis, the time period T of a simple pendulum of length l and mass m at a place with gravity g is proportional to:","o":["√(l/g)","√(g/l)","l/g","m√(l/g)"],"a":0,"e":"Assume T = k · lᵃ · gᵇ · mᶜ.\nDimensions: [T] = [L]ᵃ [L T⁻²]ᵇ [M]ᶜ = Lᵃ⁺ᵇ T⁻²ᵇ Mᶜ.\nMass: c = 0. Time: −2b = 1, so b = −1/2. Length: a + b = 0, so a = 1/2.\nTherefore T ∝ l^(1/2) g^(−1/2) = √(l/g). Mass does not appear."},{"q":"A resistance is found from R = V/I with V = (100 ± 5) V and I = (10 ± 0.2) A. The percentage error in R is:","o":["3%","5%","7%","10%"],"a":2,"e":"For a quotient, the maximum fractional errors add.\nΔR/R = ΔV/V + ΔI/I = 5/100 + 0.2/10 = 0.05 + 0.02 = 0.07.\nSo the percentage error in R is 7%."}],"neet":[{"q":"A light year is a unit of:","o":["time","distance","speed","energy"],"a":1,"e":"A light year is the distance travelled by light in vacuum in one year.\nIt is about 9.46 × 10¹⁵ m. Even though the word 'year' appears in it, it measures distance, not time."},{"q":"A vernier caliper has 10 vernier divisions equal to 9 main scale divisions. If 1 main scale division is 1 mm, the least count is:","o":["0.1 mm","0.01 mm","1 mm","0.9 mm"],"a":0,"e":"10 vernier divisions (VSD) = 9 main scale divisions (MSD).\nSo 1 VSD = 9/10 MSD = 0.9 mm.\nLeast count = 1 MSD − 1 VSD = 1 mm − 0.9 mm = 0.1 mm."}]}},"12":{"0":{"base":[{"q":"What is the SI unit of electric charge?","o":["Coulomb","Ampere","Volt","Farad"],"a":0,"e":"Charge is measured in coulomb (C). Since current is charge per unit time, 1 C = 1 A × 1 s.\nAmpere is the unit of current, volt of potential difference and farad of capacitance.\nAnswer: Coulomb."},{"q":"Two point charges of 2 μC and 3 μC are 0.3 m apart in vacuum. What is the force between them? (k = 9 × 10⁹ N·m²/C²)","o":["0.6 N","0.06 N","6 N","0.18 N"],"a":0,"e":"Coulomb's law: F = k q₁ q₂ / r².\nq₁ = 2 × 10⁻⁶ C, q₂ = 3 × 10⁻⁶ C, r = 0.3 m.\nF = 9 × 10⁹ × (2 × 10⁻⁶)(3 × 10⁻⁶) / (0.3)²\n= 9 × 10⁹ × 6 × 10⁻¹² / 0.09\n= 0.054 / 0.09 = 0.6 N.\nThe force is repulsive because both charges are positive.\nAnswer: 0.6 N."},{"q":"Quantisation of charge means that the charge on any body is always an integral multiple of:","o":["1.6 × 10⁻¹⁹ C","9.1 × 10⁻³¹ C","1 C","6.02 × 10²³ C"],"a":0,"e":"Charge on a body is q = ne, where n is an integer and e = 1.6 × 10⁻¹⁹ C is the magnitude of the charge of one electron (or proton).\n9.1 × 10⁻³¹ is the electron mass in kg, not a charge.\nAnswer: 1.6 × 10⁻¹⁹ C."},{"q":"The electric field due to a point charge at distance r is E = kq/r². If the distance is doubled, the field becomes:","o":["Half","One-fourth","Double","Four times"],"a":1,"e":"E ∝ 1/r².\nNew distance = 2r, so E′ = kq/(2r)² = kq/(4r²) = E/4.\nThe field becomes one-fourth of its original value.\nAnswer: One-fourth."},{"q":"Which statement about electric field lines is correct?","o":["They start on negative charges and end on positive charges","They can intersect each other","They never intersect each other","They are always closed loops"],"a":2,"e":"The electric field at a point has only one direction. If two field lines crossed, the field at the crossing point would have two directions, which is impossible. So field lines never intersect.\nField lines start on positive charges and end on negative charges, so the first option is reversed. Lines due to static charges are not closed loops.\nAnswer: They never intersect each other."}],"cet":[{"q":"Two identical charges repel each other with force F when placed a distance r apart. If the distance is halved, the force becomes:","o":["F/4","F/2","2F","4F"],"a":3,"e":"Coulomb's force F ∝ 1/r².\nWhen r becomes r/2, F′ = F × (r/(r/2))² = F × 2² = 4F.\nAnswer: 4F."},{"q":"The SI unit of electric field is:","o":["N/C","N·C","C/N","J/C"],"a":0,"e":"Electric field E = F/q, so its unit is newton per coulomb (N/C). This is also equal to volt per metre (V/m).\nJ/C is the unit of potential, the volt.\nAnswer: N/C."}],"jee":[{"q":"Two point charges +4q and +q are placed 6 cm apart. At what distance from +4q, on the line joining them, is the electric field zero?","o":["2 cm","3 cm","4 cm","5 cm"],"a":2,"e":"Both charges are positive, so the fields cancel only at a point between them. Let that point be x cm from +4q, so it is (6 − x) cm from +q.\nSet the field magnitudes equal: k(4q)/x² = k(q)/(6 − x)².\nTaking square roots: 2/x = 1/(6 − x), so 2(6 − x) = x.\n12 − 2x = x, so 3x = 12 and x = 4 cm.\nAnswer: 4 cm from +4q."},{"q":"A charge q is placed at the centre of a cube. The electric flux through one face of the cube is:","o":["q/ε₀","q/(6ε₀)","q/(3ε₀)","6q/ε₀"],"a":1,"e":"By Gauss's law, the total flux through the closed cube is q/ε₀.\nThe cube has 6 identical faces and the charge is at the centre, so the flux divides equally.\nFlux through one face = q/(6ε₀).\nAnswer: q/(6ε₀)."}],"neet":[{"q":"The electric flux through a closed surface depends on:","o":["The size of the surface","The shape of the surface","The net charge enclosed by the surface","The charges outside the surface"],"a":2,"e":"Gauss's law: Φ = q_enclosed / ε₀.\nThe flux depends only on the net charge inside the surface. Charges outside contribute equal inward and outward flux, so they add nothing to the net.\nAnswer: The net charge enclosed by the surface."},{"q":"A dipole of moment p in a uniform field E experiences the maximum torque when the angle between p and E is:","o":["0°","45°","90°","180°"],"a":2,"e":"Torque τ = pE sin θ.\nsin θ is largest (equal to 1) at θ = 90°, so the torque is maximum, τ = pE.\nAt 0° and 180° sin θ = 0, so the torque is zero.\nAnswer: 90°."}]}}},"Chemistry":{"11":{"0":{"base":[{"q":"How many particles are present in one mole of a substance?","o":["6.022 × 10²³","6.022 × 10²²","3.011 × 10²³","1.2 × 10²⁴"],"a":0,"e":"One mole is the amount of substance that contains as many particles as there are atoms in 12 g of carbon-12.\nThat number is the Avogadro number, 6.022 × 10²³ per mole."},{"q":"What is the molar mass of water (H₂O) in g/mol? (H = 1, O = 16)","o":["16","18","20","10"],"a":1,"e":"Molar mass = sum of the atomic masses of all atoms in the formula.\nH₂O = 2 × 1 + 16 = 18 g/mol."},{"q":"Which of the following is a compound?","o":["Oxygen","Water","Brass","Air"],"a":1,"e":"A compound is a pure substance made of two or more elements combined chemically in a fixed ratio.\nWater (H₂O) is a compound of hydrogen and oxygen. Oxygen is an element, while brass and air are mixtures."},{"q":"How many moles are present in 36 g of water? (Molar mass of H₂O = 18 g/mol)","o":["1","2","3","0.5"],"a":1,"e":"Number of moles n = mass / molar mass.\nn = 36 g / 18 g mol⁻¹ = 2 mol.\nAnswer: 2 moles."}],"cet":[{"q":"How many moles are there in 22 g of CO₂? (C = 12, O = 16)","o":["0.25","0.5","1","2"],"a":1,"e":"Molar mass of CO₂ = 12 + 2 × 16 = 44 g/mol.\nMoles = mass ÷ molar mass = 22 ÷ 44 = 0.5 mol."},{"q":"What is the mass of 0.2 mol of NaOH? (Na = 23, O = 16, H = 1)","o":["4 g","8 g","20 g","40 g"],"a":1,"e":"Molar mass of NaOH = 23 + 16 + 1 = 40 g/mol.\nMass = moles × molar mass = 0.2 × 40 = 8 g."}],"jee":[{"q":"10 g of CaCO₃ (molar mass 100 g/mol) is heated completely: CaCO₃ → CaO + CO₂. What volume of CO₂ is produced at 0 °C and 1 atm?","o":["1.12 L","2.24 L","4.48 L","22.4 L"],"a":1,"e":"Moles of CaCO₃ = 10 ÷ 100 = 0.1 mol.\nThe equation shows 1 mol CaCO₃ gives 1 mol CO₂, so 0.1 mol of CO₂ forms.\nAt 0 °C and 1 atm one mole of gas occupies 22.4 L. Volume = 0.1 × 22.4 = 2.24 L."},{"q":"A compound contains 40% C, 6.67% H and 53.33% O by mass. Its empirical formula is: (C = 12, H = 1, O = 16)","o":["CHO","CH₂O","C₂H₄O₂","CH₃O"],"a":1,"e":"Take 100 g of the compound: 40 g C, 6.67 g H, 53.33 g O.\nMoles: C = 40 ÷ 12 = 3.33; H = 6.67 ÷ 1 = 6.67; O = 53.33 ÷ 16 = 3.33.\nDivide by the smallest (3.33): C : H : O = 1 : 2 : 1.\nEmpirical formula = CH₂O. (C₂H₄O₂ could be a molecular formula, but it is not the empirical one.)"}],"neet":[{"q":"What is the molarity of a solution containing 4 g of NaOH (molar mass 40 g/mol) in 500 mL of solution?","o":["0.1 M","0.2 M","0.4 M","2 M"],"a":1,"e":"Moles of NaOH = 4 ÷ 40 = 0.1 mol.\nVolume = 500 mL = 0.5 L.\nMolarity = moles ÷ volume in litres = 0.1 ÷ 0.5 = 0.2 M."},{"q":"The law of conservation of mass was given by:","o":["Dalton","Lavoisier","Proust","Avogadro"],"a":1,"e":"Antoine Lavoisier showed that mass is neither created nor destroyed in a chemical reaction.\nProust gave the law of definite proportions, and Dalton gave the atomic theory and the law of multiple proportions."}]}},"12":{"0":{"base":[{"q":"Molarity is defined as the number of moles of solute per:","o":["Kilogram of solvent","Litre of solution","Litre of solvent","Kilogram of solution"],"a":1,"e":"Molarity (M) = moles of solute / volume of solution in litres.\nMoles per kilogram of solvent is molality, which does not change with temperature.\nAnswer: Litre of solution."},{"q":"A solution contains 1 mol of ethanol and 3 mol of water. What is the mole fraction of ethanol?","o":["0.25","0.33","0.75","0.5"],"a":0,"e":"Mole fraction of ethanol = moles of ethanol / total moles.\n= 1 / (1 + 3) = 1/4 = 0.25.\n(The mole fraction of water is 0.75, and the two add up to 1.)\nAnswer: 0.25."},{"q":"According to Raoult's law, the partial vapour pressure of a component A in an ideal solution is:","o":["xₐ p°ₐ","p°ₐ / xₐ","xₐ + p°ₐ","p°ₐ − xₐ"],"a":0,"e":"Raoult's law: the partial vapour pressure of a component in an ideal solution is equal to the product of its mole fraction and the vapour pressure of the pure component.\npₐ = xₐ p°ₐ.\nAnswer: xₐ p°ₐ."},{"q":"Which colligative property is most suitable for finding the molar mass of proteins and polymers?","o":["Lowering of vapour pressure","Elevation of boiling point","Depression of freezing point","Osmotic pressure"],"a":3,"e":"Proteins and polymers have very large molar masses, so even a concentrated solution contains very few moles of solute.\nOsmotic pressure gives a measurable value even at very low concentration and can be measured at room temperature, so heat-sensitive molecules are not damaged.\nThe other properties give very small changes for such dilute solutions.\nAnswer: Osmotic pressure."},{"q":"For a solution of a non-volatile solute, the relative lowering of vapour pressure (p° − p)/p° is equal to:","o":["Mole fraction of the solvent","Mole fraction of the solute","Molality of the solution","Molarity of the solution"],"a":1,"e":"From Raoult's law, p = x_solvent p°.\nSo (p° − p)/p° = 1 − x_solvent = x_solute.\nThe relative lowering of vapour pressure equals the mole fraction of the solute.\nAnswer: Mole fraction of the solute."}],"cet":[{"q":"The unit of molality is:","o":["mol/L","mol/kg","g/L","It has no unit"],"a":1,"e":"Molality (m) = moles of solute / mass of solvent in kilograms.\nSo its unit is mol kg⁻¹ (often written as m).\nMol/L is the unit of molarity.\nAnswer: mol/kg."},{"q":"Which of the following pairs forms an (almost) ideal solution?","o":["Benzene and toluene","Acetone and chloroform","Ethanol and water","Nitric acid and water"],"a":0,"e":"An ideal solution obeys Raoult's law. This happens when the A–B attractions are about equal to the A–A and B–B attractions.\nBenzene and toluene are very similar molecules, so they form a nearly ideal solution.\nAcetone + chloroform shows negative deviation (hydrogen bonding), ethanol + water shows positive deviation, and nitric acid + water shows negative deviation.\nAnswer: Benzene and toluene."}],"jee":[{"q":"18 g of glucose (molar mass 180 g/mol) is dissolved in 100 g of water. The molality of the solution is:","o":["0.1 m","0.5 m","1 m","10 m"],"a":2,"e":"Moles of glucose = 18 / 180 = 0.1 mol.\nMass of solvent = 100 g = 0.1 kg.\nMolality = moles of solute / kg of solvent = 0.1 / 0.1 = 1 m.\nAnswer: 1 m."},{"q":"The van't Hoff factor (i) for a dilute aqueous solution of NaCl, assuming complete dissociation, is:","o":["1","2","3","0.5"],"a":1,"e":"NaCl → Na⁺ + Cl⁻. One formula unit gives two ions.\ni = (number of particles after dissociation) / (number of formula units dissolved) = 2/1 = 2.\nAnswer: 2."}],"neet":[{"q":"According to Henry's law, the solubility of a gas in a liquid at a given temperature is:","o":["Inversely proportional to the pressure","Directly proportional to the partial pressure of the gas","Independent of the pressure","Proportional to the square of the pressure"],"a":1,"e":"Henry's law: the mass of a gas dissolved in a given volume of liquid at constant temperature is directly proportional to the partial pressure of the gas above the liquid.\nThat is why a soda bottle fizzes when the pressure is released.\nAnswer: Directly proportional to the partial pressure of the gas."},{"q":"In osmosis, the net flow of solvent through a semipermeable membrane is:","o":["From a concentrated solution to a dilute solution","From a dilute solution (or pure solvent) to a concentrated solution","From pure solvent to pure solvent","There is no flow"],"a":1,"e":"A semipermeable membrane lets solvent pass but not solute. The solvent moves from the side with lower solute concentration (a dilute solution or pure solvent) towards the side with higher solute concentration.\nAnswer: From a dilute solution (or pure solvent) to a concentrated solution."}]}}},"Math":{"11":{"0":{"base":[{"q":"If A = {1, 2, 3}, how many subsets does A have?","o":["3","6","8","9"],"a":2,"e":"A set with n elements has 2ⁿ subsets.\nHere n = 3, so the number of subsets = 2³ = 8."},{"q":"Which of the following is the empty set?","o":["{0}","{∅}","{x ∈ R : x² + 1 = 0}","{x ∈ R : x² − 1 = 0}"],"a":2,"e":"The empty set has no elements.\n{0} has the element 0, and {∅} has one element (the empty set itself).\nx² + 1 = 0 has no real solution, so {x ∈ R : x² + 1 = 0} is empty.\n{x ∈ R : x² − 1 = 0} = {−1, 1}, which is not empty."},{"q":"If A = {1, 2, 3} and B = {3, 4, 5}, then A ∪ B is:","o":["{3}","{1, 2, 3, 4, 5}","{1, 2}","{4, 5}"],"a":1,"e":"The union contains every element that is in A or in B (or both).\nCollecting all of them once gives {1, 2, 3, 4, 5}.\n{3} is the intersection A ∩ B."},{"q":"If A = {1, 2, 3, 4} and B = {3, 4, 5, 6}, then A − B is:","o":["{1, 2}","{5, 6}","{3, 4}","{1, 2, 5, 6}"],"a":0,"e":"A − B contains the elements that are in A but not in B.\n3 and 4 are in B, so remove them from A. What remains is {1, 2}.\n{5, 6} would be B − A.\nAnswer: {1, 2}."}],"cet":[{"q":"If n(A) = 3, n(B) = 4 and n(A ∩ B) = 2, then n(A ∪ B) is:","o":["5","6","7","9"],"a":0,"e":"n(A ∪ B) = n(A) + n(B) − n(A ∩ B).\n= 3 + 4 − 2 = 5."},{"q":"If A = {x : x is a prime number less than 10}, then n(A) is:","o":["3","4","5","6"],"a":1,"e":"Prime numbers less than 10 are 2, 3, 5 and 7.\n(1 is not prime, and 4, 6, 8, 9 are composite.)\nSo A = {2, 3, 5, 7} and n(A) = 4."}],"jee":[{"q":"In a class of 60 students, 40 play cricket and 30 play football. If every student plays at least one of the two games, how many play both?","o":["5","10","15","20"],"a":1,"e":"Every student plays at least one game, so n(C ∪ F) = 60.\nn(C ∪ F) = n(C) + n(F) − n(C ∩ F), so 60 = 40 + 30 − n(C ∩ F).\nn(C ∩ F) = 70 − 60 = 10."},{"q":"How many integers from 1 to 100 are divisible by 2 or 5?","o":["50","60","70","80"],"a":1,"e":"Let A = multiples of 2 and B = multiples of 5 (from 1 to 100).\nn(A) = 100 ÷ 2 = 50 and n(B) = 100 ÷ 5 = 20.\nMultiples of both (that is, of 10): n(A ∩ B) = 10.\nn(A ∪ B) = 50 + 20 − 10 = 60."}]}},"12":{"0":{"base":[{"q":"A relation R on a set A is reflexive if:","o":["(a, b) ∈ R implies (b, a) ∈ R","(a, a) ∈ R for every a ∈ A","(a, b) ∈ R and (b, c) ∈ R imply (a, c) ∈ R","R is the empty set"],"a":1,"e":"Reflexive: every element is related to itself, that is (a, a) ∈ R for all a ∈ A.\nThe second condition (a, b) ∈ R ⇒ (b, a) ∈ R is symmetry, and the third is transitivity.\nAnswer: (a, a) ∈ R for every a ∈ A."},{"q":"The function f : R → R defined by f(x) = 2x + 3 is:","o":["One-one but not onto","Onto but not one-one","Both one-one and onto","Neither one-one nor onto"],"a":2,"e":"One-one: if f(x₁) = f(x₂), then 2x₁ + 3 = 2x₂ + 3, so x₁ = x₂. ✓\nOnto: for any real y, let x = (y − 3)/2, which is real, and f(x) = y. ✓\nSo f is both one-one and onto (bijective).\nAnswer: Both one-one and onto."},{"q":"The function f : R → R defined by f(x) = x² is:","o":["One-one and onto","One-one but not onto","Onto but not one-one","Neither one-one nor onto"],"a":3,"e":"Not one-one: f(−1) = 1 = f(1), but −1 ≠ 1.\nNot onto: x² ≥ 0 for every real x, so a negative number such as −4 has no pre-image. The range is [0, ∞), not R.\nAnswer: Neither one-one nor onto."},{"q":"If f(x) = x + 1 and g(x) = 2x, then (g ∘ f)(3) is:","o":["7","8","9","10"],"a":1,"e":"(g ∘ f)(x) = g(f(x)). First apply f, then g.\nf(3) = 3 + 1 = 4.\ng(4) = 2 × 4 = 8.\nAnswer: 8."},{"q":"If A has 3 elements, how many one-one functions are there from A to A?","o":["3","6","9","27"],"a":1,"e":"A one-one function from A to A on a finite set is a rearrangement (permutation) of its elements.\nThe first element has 3 choices, the second has 2 and the third has 1.\nNumber = 3 × 2 × 1 = 3! = 6.\nAnswer: 6."}],"cet":[{"q":"A relation R on {1, 2, 3} is R = {(1, 1), (2, 2), (3, 3)}. Then R is:","o":["Reflexive only","Symmetric only","An equivalence relation","Neither reflexive nor symmetric"],"a":2,"e":"Reflexive: (1,1), (2,2), (3,3) are all in R. ✓\nSymmetric: each pair (a, a) reversed is the same pair. ✓\nTransitive: the only chains are (a, a), (a, a) giving (a, a), which is in R. ✓\nA relation that is reflexive, symmetric and transitive is an equivalence relation.\nAnswer: An equivalence relation."},{"q":"If f(x) = 3x − 2, then f⁻¹(7) is:","o":["1","3","5","9"],"a":1,"e":"f⁻¹(7) is the value of x for which f(x) = 7.\n3x − 2 = 7, so 3x = 9 and x = 3.\nAnswer: 3."}],"jee":[{"q":"The number of reflexive relations on a set with 2 elements is:","o":["2","4","8","16"],"a":1,"e":"A relation on a 2-element set {a, b} is a subset of A × A, which has 4 pairs: (a,a), (b,b), (a,b), (b,a).\nA reflexive relation must contain (a,a) and (b,b). The other two pairs can each be in or out.\nNumber = 2 × 2 = 4.\nAnswer: 4."},{"q":"The domain of f(x) = √(x² − 4) is:","o":["[−2, 2]","(−∞, −2] ∪ [2, ∞)","(−2, 2)","R"],"a":1,"e":"The expression under the square root must be non-negative: x² − 4 ≥ 0.\n(x − 2)(x + 2) ≥ 0, which holds when x ≤ −2 or x ≥ 2.\nDomain = (−∞, −2] ∪ [2, ∞).\nAnswer: (−∞, −2] ∪ [2, ∞)."}]}}},"Bio":{"11":{"0":{"base":[{"q":"Which taxonomic category lies just above 'family'?","o":["Genus","Order","Species","Variety"],"a":1,"e":"The order of categories from lowest to highest is: species, genus, family, order, class, phylum (division in plants), kingdom.\nSo the category just above family is order."},{"q":"Who introduced binomial nomenclature?","o":["Aristotle","Carolus Linnaeus","Charles Darwin","Gregor Mendel"],"a":1,"e":"Carolus Linnaeus popularised binomial nomenclature, in which each organism gets a two-part name (genus + species).\nDarwin is known for evolution by natural selection, and Mendel for the laws of inheritance."},{"q":"What is the basic unit of classification?","o":["Genus","Species","Family","Order"],"a":1,"e":"A species is a group of individuals that are similar and can interbreed to give fertile offspring.\nIt is the lowest, basic unit of classification."},{"q":"Which is the correct way to write the scientific name of the mango?","o":["Mangifera Indica","mangifera indica","Mangifera indica","MANGIFERA INDICA"],"a":2,"e":"Rules for writing a scientific name: the genus name starts with a capital letter and the species name starts with a small letter. In print the whole name is italicised, and when handwritten each word is underlined separately.\nSo the correct form is Mangifera indica.\nAnswer: Mangifera indica."},{"q":"Which is the correct order of taxonomic categories from highest to lowest?","o":["Kingdom, Phylum, Class, Order, Family, Genus, Species","Kingdom, Class, Phylum, Order, Family, Genus, Species","Kingdom, Phylum, Order, Class, Family, Genus, Species","Phylum, Kingdom, Class, Order, Family, Genus, Species"],"a":0,"e":"The taxonomic hierarchy from highest to lowest is: Kingdom → Phylum (Division in plants) → Class → Order → Family → Genus → Species.\nEach higher rank includes many lower ranks, so Kingdom is the largest group and Species is the smallest.\nAnswer: Kingdom, Phylum, Class, Order, Family, Genus, Species."},{"q":"According to NCERT, which feature is shown by all living organisms without exception?","o":["Growth","Reproduction","Metabolism","Movement"],"a":2,"e":"Growth can also happen in non-living things (for example, a mountain or a crystal grows by adding material on the outside).\nReproduction is not shown by every living organism (a mule, or a sterile worker bee, cannot reproduce).\nMovement is not seen in all organisms.\nMetabolism, the sum of all chemical reactions in the body, is shown by every living organism.\nAnswer: Metabolism."}],"cet":[{"q":"In the scientific name Mangifera indica, the word 'indica' is the:","o":["Genus","Specific epithet","Family","Order"],"a":1,"e":"In a binomial name the first word is the genus (Mangifera, with a capital letter) and the second word is the specific epithet (indica, in small letters).\nSo 'indica' is the specific epithet."},{"q":"Which of the following is NOT a characteristic of all living organisms?","o":["Growth","Reproduction","Locomotion","Metabolism"],"a":2,"e":"All living organisms show growth, metabolism, cellular organisation and response to stimuli, and they reproduce.\nLocomotion (moving from place to place) is not shown by all, for example plants are fixed in one place."}],"neet":[{"q":"ICBN stands for:","o":["International Code of Botanical Nomenclature","International Council of Biological Names","International Code of Biological Nomenclature","Indian Code of Botanical Nomenclature"],"a":0,"e":"ICBN is the International Code of Botanical Nomenclature, the set of rules for naming plants.\n(In 2011 it was renamed ICN, the International Code of Nomenclature for algae, fungi and plants, but exam questions often still use ICBN.)"},{"q":"Which taxonomic aid gives an actual account of the habitat and distribution of the plants of a given area?","o":["Herbarium","Flora","Monograph","Taxonomic key"],"a":1,"e":"A flora gives the actual account of the habitat and distribution of plants of a particular area.\nA herbarium is a store of dried, pressed plant specimens. A monograph has information on one taxon. A key helps in identification."}]}},"12":{"0":{"base":[{"q":"The male gametophyte of a flowering plant is the:","o":["Embryo sac","Pollen grain","Ovule","Anther"],"a":1,"e":"A pollen grain develops from a microspore and is the male gametophyte.\nThe embryo sac is the female gametophyte. The anther is the structure that produces pollen, and the ovule contains the embryo sac.\nAnswer: Pollen grain."},{"q":"A typical mature embryo sac of a flowering plant has:","o":["8 cells and 8 nuclei","7 cells and 8 nuclei","7 cells and 7 nuclei","8 cells and 7 nuclei"],"a":1,"e":"The megaspore divides three times to form 8 nuclei.\nThe cells are: 3 antipodals, 2 synergids and 1 egg cell = 6 cells, plus the large central cell which holds 2 polar nuclei. That makes 7 cells and 8 nuclei.\nAnswer: 7 cells and 8 nuclei."},{"q":"Double fertilisation in flowering plants involves:","o":["Syngamy only","Triple fusion only","Syngamy and triple fusion","Two syngamies"],"a":2,"e":"Two male gametes enter the embryo sac.\nOne fuses with the egg cell, which is syngamy, and forms the zygote.\nThe other fuses with the two polar nuclei, which is triple fusion, and forms the primary endosperm nucleus.\nTogether these two events are called double fertilisation.\nAnswer: Syngamy and triple fusion."},{"q":"The primary endosperm nucleus (PEN) is:","o":["Haploid","Diploid","Triploid","Tetraploid"],"a":2,"e":"PEN is formed by the fusion of one male gamete (n) with the two polar nuclei (n + n).\nPloidy = n + n + n = 3n, so it is triploid.\nIt develops into the endosperm, which nourishes the embryo.\nAnswer: Triploid."},{"q":"Which layer of the anther wall nourishes the developing pollen grains?","o":["Epidermis","Endothecium","Middle layers","Tapetum"],"a":3,"e":"The anther wall has four layers: epidermis, endothecium, middle layers and tapetum.\nThe innermost layer, the tapetum, nourishes the developing pollen grains. Its cells are rich in cytoplasm and usually have more than one nucleus.\nAnswer: Tapetum."}],"cet":[{"q":"After fertilisation, which part of the flower develops into the fruit?","o":["Ovule","Ovary","Style","Stigma"],"a":1,"e":"After fertilisation the ovary wall develops into the fruit wall (pericarp), and the ovules inside develop into seeds.\nThe style and stigma usually wither.\nAnswer: Ovary."},{"q":"Pollination by wind is called:","o":["Hydrophily","Anemophily","Entomophily","Ornithophily"],"a":1,"e":"Anemophily means pollination by wind. Hydrophily is by water, entomophily by insects and ornithophily by birds.\nWind-pollinated flowers usually have light, dry pollen and feathery stigmas.\nAnswer: Anemophily."}],"neet":[{"q":"In a flowering plant, the functional megaspore develops into the:","o":["Pollen grain","Embryo sac","Endosperm","Embryo"],"a":1,"e":"In the ovule, one megaspore of the tetrad stays functional and divides to form the female gametophyte, the embryo sac.\nA pollen grain comes from a microspore. Endosperm and embryo form only after fertilisation.\nAnswer: Embryo sac."},{"q":"Which of the following is a post-fertilisation event?","o":["Pollination","Development of the endosperm","Germination of pollen on the stigma","Microsporogenesis"],"a":1,"e":"Post-fertilisation events include development of the endosperm, the embryo, the seed and the fruit. The endosperm develops first, so the embryo can be nourished.\nPollination, pollen germination on the stigma and microsporogenesis all happen before fertilisation.\nAnswer: Development of the endosperm."}]}}}};
+var TABS=[["base","Base building"],["cet","CET PYQ"],["jee","JEE PYQ"],["neet","NEET PYQ"]];
+var NOTE={base:"Easy concept-level questions to build your basics.",cet:"Practice questions written in MHT-CET style. Official past questions will be added here.",jee:"Practice questions written in JEE style. Official past questions will be added here.",neet:"Practice questions written in NEET style. Official past questions will be added here."};
+function tabsFor(sub){return TABS.filter(function(t){return !(sub=="Math"&&t[0]=="neet")&&!(sub=="Bio"&&t[0]=="jee")})}
+function chData(sub,cl,i){return (DATA[sub]&&DATA[sub][cl]&&DATA[sub][cl][i])||{}}
+function chCount(sub,cl,i){var d=chData(sub,cl,i),n=0;tabsFor(sub).forEach(function(t){n+=(d[t[0]]||[]).length});return n}
+var psub="Physics",pcls="11",pch=null,ptab2="base";
+function qToday(){var k=dk(new Date());if(P.qd.day!=k)P.qd={day:k,ids:{}};return k}
+function addQ(n){var k=qToday(),before=P.qs[k]||0;P.qs[k]=before+n;P.qTotal+=n;if(before<5&&P.qs[k]>=5){P.qDays++;P.xp+=20;return true}return false}
+function drawQs(box,list,idp){
+ if(!list||!list.length){box.insertAdjacentHTML("beforeend",'<div class="empty">Questions for this section are coming soon.</div>');return}
+ qToday();
+ list.forEach(function(x,qi){
+  var id=idp+"-"+qi,d=document.createElement("div");d.className="qc up";d.style.animationDelay=(qi*60)+"ms";
+  var meta=document.createElement("div");meta.className="qm";meta.textContent=x.y||"Practice question";d.appendChild(meta);
+  var h=document.createElement("h3");h.textContent=(qi+1)+". "+x.q;d.appendChild(h);
+  var ob=document.createElement("div");ob.className="qo";d.appendChild(ob);
+  var sol=document.createElement("div");sol.className="sol";sol.hidden=true;d.appendChild(sol);
+  var sb=document.createElement("button");sb.className="chip";sb.textContent="Show solution";sb.style.marginTop="10px";d.appendChild(sb);
+  var btns=[],locked=false;
+  function showSol(pre){sol.innerHTML="";var t=document.createElement("p");t.className="ex";t.style.color="var(--text)";t.textContent=pre+"Answer: "+"ABCD"[x.a]+". "+x.o[x.a];var s2=document.createElement("p");s2.className="ex";s2.textContent=x.e;sol.appendChild(t);sol.appendChild(s2);sol.hidden=false;sb.hidden=true}
+  sb.onclick=function(){locked=true;btns[x.a].classList.add("ok");showSol("")};
+  x.o.forEach(function(t,oi){var b=document.createElement("button");b.className="opt";b.textContent="ABCD"[oi]+". "+t;btns.push(b);
+   b.onclick=function(){
+    if(locked)return;locked=true;btns[x.a].classList.add("ok");if(oi!=x.a)b.classList.add("bad");
+    showSol(oi==x.a?"✅ Correct. ":"❌ Not quite. ");
+    if(!P.qd.ids[id]){P.qd.ids[id]=1;P.xp+=(oi==x.a?5:1);var hit=addQ(1);save();renderStats();if(hit){var n=document.createElement("p");n.className="ex";n.textContent="🔥 5 questions done today. Your streak is counted! +20 XP";sol.appendChild(n)}}
+   };ob.appendChild(b)});
+  box.appendChild(d)})
+}
+function drawPractice(){
+ var ch=document.getElementById("pqc"),tb=document.getElementById("pqt"),box=document.getElementById("pql");ch.innerHTML="";tb.innerHTML="";box.innerHTML="";
+ if(pch===null){
+  Object.keys(CH).forEach(function(n){var b=document.createElement("button");b.className="chip";b.textContent=n;b.setAttribute("aria-pressed",n==psub);b.onclick=function(){psub=n;drawPractice()};ch.appendChild(b)});
+  ["11","12"].forEach(function(c){var b=document.createElement("button");b.className="chip";b.textContent="Class "+c;b.setAttribute("aria-pressed",c==pcls);b.onclick=function(){pcls=c;drawPractice()};tb.appendChild(b)});
+  CH[psub][pcls].forEach(function(nm,i){
+   var n=chCount(psub,pcls,i),r=document.createElement("div");r.className="cp up";r.style.animationDelay=(i*25)+"ms";r.setAttribute("role","button");r.tabIndex=0;
+   r.innerHTML='<span class="cpn">'+(i+1)+'</span><span class="cpt"></span><span class="cpk">→</span>';
+   var t=r.querySelector(".cpt");t.textContent=nm;var sm=document.createElement("small");sm.className="cps";sm.textContent=n?(n+" questions"):"Coming soon";t.appendChild(sm);
+   function go(){pch=i;ptab2="base";drawPractice();window.scrollTo(0,0)}
+   r.onclick=go;r.onkeydown=function(e){if(e.key=="Enter"||e.key==" "){e.preventDefault();go()}};box.appendChild(r)});
+  return}
+ var tabs=tabsFor(psub);if(!tabs.some(function(t){return t[0]==ptab2}))ptab2=tabs[0][0];
+ box.appendChild(back("← Back to Class "+pcls+" chapters",function(){pch=null;drawPractice()}));
+ var h2=document.createElement("h2");h2.textContent=CH[psub][pcls][pch];h2.style.cssText="font-size:24px;margin:4px 0 4px";box.appendChild(h2);
+ var sub=document.createElement("p");sub.className="ex";sub.textContent=psub+" · Class "+pcls+" · Chapter "+(pch+1);box.appendChild(sub);
+ tabs.forEach(function(t){var b=document.createElement("button");b.className="chip";b.textContent=t[1];b.setAttribute("aria-pressed",t[0]==ptab2);b.onclick=function(){ptab2=t[0];drawPractice()};tb.appendChild(b)});
+ var nt=document.createElement("p");nt.className="ex";nt.textContent=NOTE[ptab2];box.appendChild(nt);
+ drawQs(box,chData(psub,pcls,pch)[ptab2],psub+pcls+"-"+pch+"-"+ptab2);
+}
+document.getElementById("lq").onsubmit=function(e){e.preventDefault();
+ var i=document.getElementById("lqn"),n=Math.max(0,Math.min(100,parseInt(i.value,10)||0)),m=document.getElementById("lqm");
+ if(!n){m.textContent="Type a number from 1 to 100.";return}
+ var k=qToday(),gain=Math.min(n,Math.max(0,30-(P.qx[k]||0)));P.qx[k]=(P.qx[k]||0)+gain;P.xp+=gain;
+ var hit=addQ(n);i.value="";save();renderStats();
+ m.textContent="Added "+n+" question"+(n>1?"s":"")+" (+"+gain+" XP)."+(hit?" 🔥 5 questions done today. Your streak is counted! +20 XP":"")};
+drawPractice();
+renderStats();
+</script>
+</body>
+</html>
