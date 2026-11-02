@@ -689,7 +689,7 @@ renderStats();
 <a id="nbBtn" href="#ask" aria-label="Ask Doubt"><img src="notiva-emblem.png" alt="Notiva logo"></a>
 <script>
 (function(){
-var WORKER_URL="PASTE_YOUR_WORKER_URL_HERE";
+var WORKER_URL="https://notiva-chat.mohitbaviskar0o0.workers.dev/";
 var btn=document.getElementById("nbBtn"),msgs=document.getElementById("nbMsgs"),form=document.getElementById("nbForm"),inp=document.getElementById("nbIn"),snd=document.getElementById("nbSend"),sug=document.getElementById("nbSug");
 var hist=[],busy=false;
 function add(role,text,cls){var d=document.createElement("div");d.className="nbm "+role+(cls?" "+cls:"");d.textContent=text;msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;return d}
